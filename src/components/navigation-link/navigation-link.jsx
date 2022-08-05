@@ -16,7 +16,14 @@ const NavigationLink = ({ icon = "burger", title, to = "/" }) => {
   const Icon = iconsByName[icon];
 
   return (
-    <NavLink to="/" className={navigationLinkStyles.link}>
+    <NavLink
+      to="/"
+      className={({ isActive }) =>
+        `${navigationLinkStyles.link} text text_type_main-default ${
+          isActive ? "" : "text_color_inactive"
+        }`
+      }
+    >
       {({ isActive }) => (
         <>
           <Icon type={isActive ? "primary" : "secondary"} />
