@@ -1,0 +1,26 @@
+.header {
+  position: fixed;
+  top: 0;
+  inset: 0 0;
+  height: 88px;
+  background: #1c1c21;
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04),
+    0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+}
+
+.container {
+  height: 100%;
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+}
+
+.links-container {
+  padding-left: 0;
+  list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
