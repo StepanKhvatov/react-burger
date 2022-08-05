@@ -1,0 +1,22 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  width: 240px;
+  height: 120px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  text-align: center;
+}

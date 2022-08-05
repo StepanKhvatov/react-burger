@@ -1,0 +1,21 @@
+.burger-ingredients {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs-container {
+  display: flex;
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+}
+
+.ingredients-container {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: auto;
+}
+
+.type {
+  text-transform: capitalize;
+}
