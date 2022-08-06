@@ -1,0 +1,13 @@
+.ingredients-container {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 20px;
+}
+
+.constructor-element-container {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+}

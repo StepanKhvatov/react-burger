@@ -61,7 +61,7 @@ const BurgerIngredients = () => {
       <div>
         {Object.entries(burderIngredientsByType).map(([type, ingredients]) => {
           return (
-            <div className="pb-10 pt-10">
+            <div key={type} className="pb-10 pt-10">
               <h3
                 className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
               >
@@ -70,6 +70,7 @@ const BurgerIngredients = () => {
               <div className={burgerIngredientsStyles["ingredients-container"]}>
                 {ingredients.map((item) => (
                   <BurgerIngredientCard
+                    key={item._id}
                     name={item.name}
                     proteins={item.proteins}
                     fat={item.fat}
