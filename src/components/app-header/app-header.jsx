@@ -14,8 +14,15 @@ const AppHeader = () => {
             <NavigationLink title="Лента заказов" to="/" icon="list" />
           </li>
         </ul>
-        <Logo />
-        <NavigationLink title="Личный кабинет" to="/" icon="profile" />
+        <div className={appHeaderStyles["logo-container"]}>
+          <Logo />
+        </div>
+        <NavigationLink
+          title="Личный кабинет"
+          to="/"
+          icon="profile"
+          classes={appHeaderStyles["profile-link"]}
+        />
       </div>
     </header>
   );

@@ -12,14 +12,14 @@ const iconsByName = {
   profile: ProfileIcon,
 };
 
-const NavigationLink = ({ icon = "burger", title, to = "/" }) => {
+const NavigationLink = ({ icon = "burger", title, to = "/", classes }) => {
   const Icon = iconsByName[icon];
 
   return (
     <NavLink
-      to="/"
+      to={to}
       className={({ isActive }) =>
-        `${navigationLinkStyles.link} text text_type_main-default ${
+        `${navigationLinkStyles.link} text text_type_main-default ${classes} ${
           isActive ? "" : "text_color_inactive"
         }`
       }
