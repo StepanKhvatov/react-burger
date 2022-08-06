@@ -1,7 +1,6 @@
 .constructor-page {
   margin: auto;
   max-width: 1280px;
-  padding: 0 20px 0 20px;
   display: flex;
   flex-direction: column;
   gap: 30px;

@@ -3,6 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import { burgerIngredients as data } from "../../utils/data";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
+import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 
 const localizedTypes = {
   bun: "булки",
@@ -58,7 +59,10 @@ const BurgerIngredients = () => {
           </Tab>
         </li>
       </ul>
-      <div>
+      <div
+        style={{ maxHeight: 600, overflowY: "scroll" }}
+        className={`${customScrollbarStyles["custom-scrollbar"]} pr-3`}
+      >
         {Object.entries(burderIngredientsByType).map(([type, ingredients]) => {
           return (
             <div key={type} className="pb-10 pt-10">

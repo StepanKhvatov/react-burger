@@ -4,6 +4,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { burgerIngredients as data } from "../../utils/data";
 import burgerConstructorStyles from "./burger-constructor.module.css";
+import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 
 const BurgerConstructor = () => {
   const ingredients = data.reduce(
@@ -31,28 +32,35 @@ const BurgerConstructor = () => {
           thumbnail={topIngredient.image}
         />
       </div>
-      {ingredients.unblocked.map((item) => {
-        return (
-          <div
-            key={item._id}
-            className={burgerConstructorStyles["constructor-element-container"]}
-          >
-            <button
-              aria-label="druggable-button"
-              type="button"
-              className="pr-4"
+      <div
+        style={{ maxHeight: 600, overflowY: "scroll" }}
+        className={`${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-3`}
+      >
+        {ingredients.unblocked.map((item) => {
+          return (
+            <div
+              key={item._id}
+              className={
+                burgerConstructorStyles["constructor-element-container"]
+              }
             >
-              <DragIcon />
-            </button>
-            <ConstructorElement
-              isLocked={false}
-              text={item.name}
-              price={item.price}
-              thumbnail={item.image}
-            />
-          </div>
-        );
-      })}
+              <button
+                aria-label="druggable-button"
+                type="button"
+                className="pr-4"
+              >
+                <DragIcon />
+              </button>
+              <ConstructorElement
+                isLocked={false}
+                text={item.name}
+                price={item.price}
+                thumbnail={item.image}
+              />
+            </div>
+          );
+        })}
+      </div>
       <div className={burgerConstructorStyles["constructor-element-container"]}>
         <ConstructorElement
           isLocked
