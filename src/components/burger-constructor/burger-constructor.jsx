@@ -2,11 +2,13 @@ import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { burgerIngredients as data } from "../../utils/data";
+import { burgerIngredients as mockData } from "../../utils/data";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
+import PropTypes from "prop-types";
+import { ingredientPropTypes } from "../../utils/types";
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ data = mockData }) => {
   const ingredients = data.reduce(
     (acc, item) => {
       const key = item.type === "bun" ? "blocked" : "unblocked";
@@ -79,3 +81,7 @@ const BurgerConstructor = () => {
 };
 
 export default BurgerConstructor;
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropTypes.isRequired),
+};

@@ -1,6 +1,6 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
 import burgerIngredientCardStyles from "./burger-ingredient-card.module.css";
+import { ingredientPropTypes } from "../../utils/types";
 
 const BurgerIngredientCard = ({
   name,
@@ -33,3 +33,5 @@ const BurgerIngredientCard = ({
 };
 
 export default BurgerIngredientCard;
+
+BurgerIngredientCard.propTypes = ingredientPropTypes;
