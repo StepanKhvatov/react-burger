@@ -11,7 +11,7 @@ const BurgerIngredientCard = ({
   image,
 }) => {
   return (
-    <article className={`${burgerIngredientCardStyles.card} p-3`}>
+    <li className={`${burgerIngredientCardStyles.card} p-3`}>
       <img
         alt="ingredient"
         className={burgerIngredientCardStyles.image}
@@ -28,7 +28,7 @@ const BurgerIngredientCard = ({
       >
         {name}
       </h4>
-    </article>
+    </li>
   );
 };
 

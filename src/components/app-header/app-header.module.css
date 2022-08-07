@@ -25,7 +25,6 @@
   gap: 45px;
   grid-column-start: 1;
   grid-column-end: 3;
-  justify-content: start;
   align-items: center;
 }
 

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import { burgerIngredients as data } from "../../utils/data";
@@ -14,19 +14,17 @@ const localizedTypes = {
 const BurgerIngredients = () => {
   const [currentType, setCurrentType] = useState("bun");
 
-  const burderIngredientsByType = useMemo(() => {
-    return data.reduce(
-      (acc, item) => {
-        const type = item.type;
+  const burderIngredientsByType = data.reduce(
+    (acc, item) => {
+      const type = item.type;
 
-        return {
-          ...acc,
-          [type]: [...acc[type], item],
-        };
-      },
-      { bun: [], main: [], sauce: [] }
-    );
-  }, []);
+      return {
+        ...acc,
+        [type]: [...acc[type], item],
+      };
+    },
+    { bun: [], main: [], sauce: [] }
+  );
 
   return (
     <div className={burgerIngredientsStyles["burger-ingredients"]}>
@@ -72,7 +70,7 @@ const BurgerIngredients = () => {
                 >
                   {localizedTypes[type]}
                 </h3>
-                <div
+                <ul
                   className={burgerIngredientsStyles["ingredients-container"]}
                 >
                   {ingredients.map((item) => (
@@ -86,7 +84,7 @@ const BurgerIngredients = () => {
                       image={item.image}
                     />
                   ))}
-                </div>
+                </ul>
               </div>
             );
           }
