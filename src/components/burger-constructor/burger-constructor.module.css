@@ -6,7 +6,9 @@
 }
 
 .constructor-element-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 30px 530px;
+  gap: 10px;
   align-items: center;
   justify-content: end;
   width: 100%;

@@ -1,13 +1,13 @@
 .constructor-page {
   margin: auto;
-  max-width: 1280px;
+  max-width: 1250px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 
 .content-container {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 50%);
+  grid-template-columns: repeat(2, auto);
+  gap: 40px;
 }

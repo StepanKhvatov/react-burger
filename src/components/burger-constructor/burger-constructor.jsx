@@ -23,18 +23,22 @@ const BurgerConstructor = () => {
 
   return (
     <div className={burgerConstructorStyles["ingredients-container"]}>
-      <div className={burgerConstructorStyles["constructor-element-container"]}>
-        <ConstructorElement
-          isLocked
-          type="top"
-          text={topIngredient.name}
-          price={topIngredient.price}
-          thumbnail={topIngredient.image}
-        />
+      <div
+        className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
+      >
+        <div style={{ gridColumnStart: 2, gridColumnEnd: 3 }}>
+          <ConstructorElement
+            isLocked
+            type="top"
+            text={topIngredient.name}
+            price={topIngredient.price}
+            thumbnail={topIngredient.image}
+          />
+        </div>
       </div>
       <div
-        style={{ maxHeight: 600, overflowY: "scroll" }}
-        className={`${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-3`}
+        style={{ maxHeight: 660, overflowY: "scroll" }}
+        className={`${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-6`}
       >
         {ingredients.unblocked.map((item) => {
           return (
@@ -44,11 +48,7 @@ const BurgerConstructor = () => {
                 burgerConstructorStyles["constructor-element-container"]
               }
             >
-              <button
-                aria-label="druggable-button"
-                type="button"
-                className="pr-4"
-              >
+              <button aria-label="druggable-button" type="button">
                 <DragIcon />
               </button>
               <ConstructorElement
@@ -61,14 +61,18 @@ const BurgerConstructor = () => {
           );
         })}
       </div>
-      <div className={burgerConstructorStyles["constructor-element-container"]}>
-        <ConstructorElement
-          isLocked
-          type="bottom"
-          text={bottomIngredient.name}
-          price={bottomIngredient.price}
-          thumbnail={bottomIngredient.image}
-        />
+      <div
+        className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
+      >
+        <div style={{ gridColumnStart: 2, gridColumnEnd: 3 }}>
+          <ConstructorElement
+            isLocked
+            type="bottom"
+            text={bottomIngredient.name}
+            price={bottomIngredient.price}
+            thumbnail={bottomIngredient.image}
+          />
+        </div>
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ const BurgerIngredients = () => {
 
   return (
     <div className={burgerIngredientsStyles["burger-ingredients"]}>
-      <ul className={burgerIngredientsStyles["tabs-container"]}>
+      <ul className={`${burgerIngredientsStyles["tabs-container"]} mb-10`}>
         <li>
           <Tab
             value="bun"
@@ -60,33 +60,37 @@ const BurgerIngredients = () => {
         </li>
       </ul>
       <div
-        style={{ maxHeight: 600, overflowY: "scroll" }}
-        className={`${customScrollbarStyles["custom-scrollbar"]} pr-3`}
+        style={{ maxHeight: 660, overflowY: "scroll" }}
+        className={`${customScrollbarStyles["custom-scrollbar"]} pr-5`}
       >
-        {Object.entries(burderIngredientsByType).map(([type, ingredients]) => {
-          return (
-            <div key={type} className="pb-10 pt-10">
-              <h3
-                className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
-              >
-                {localizedTypes[type]}
-              </h3>
-              <div className={burgerIngredientsStyles["ingredients-container"]}>
-                {ingredients.map((item) => (
-                  <BurgerIngredientCard
-                    key={item._id}
-                    name={item.name}
-                    proteins={item.proteins}
-                    fat={item.fat}
-                    carbohydrates={item.carbohydrates}
-                    price={item.price}
-                    image={item.image}
-                  />
-                ))}
+        {Object.entries(burderIngredientsByType).map(
+          ([type, ingredients], _, index) => {
+            return (
+              <div key={type} className={`pb-5 ${index ? "" : "pt-5"}`}>
+                <h3
+                  className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
+                >
+                  {localizedTypes[type]}
+                </h3>
+                <div
+                  className={burgerIngredientsStyles["ingredients-container"]}
+                >
+                  {ingredients.map((item) => (
+                    <BurgerIngredientCard
+                      key={item._id}
+                      name={item.name}
+                      proteins={item.proteins}
+                      fat={item.fat}
+                      carbohydrates={item.carbohydrates}
+                      price={item.price}
+                      image={item.image}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          }
+        )}
       </div>
     </div>
   );

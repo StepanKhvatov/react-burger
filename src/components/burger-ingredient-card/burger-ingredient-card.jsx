@@ -11,19 +11,23 @@ const BurgerIngredientCard = ({
   image,
 }) => {
   return (
-    <article className={`${burgerIngredientCardStyles.card} p-6`}>
+    <article className={`${burgerIngredientCardStyles.card} p-3`}>
       <img
         alt="ingredient"
         className={burgerIngredientCardStyles.image}
         src={image}
       />
       <span
-        className={`${burgerIngredientCardStyles.price} text text_type_digits-default`}
+        className={`${burgerIngredientCardStyles.price} text text_type_digits-default mb-2 mt-2`}
       >
         {price}
         <CurrencyIcon />
       </span>
-      <h4 className={`${burgerIngredientCardStyles.name} text text_type_main-default`}>{name}</h4>
+      <h4
+        className={`${burgerIngredientCardStyles.name} text text_type_main-default`}
+      >
+        {name}
+      </h4>
     </article>
   );
 };
