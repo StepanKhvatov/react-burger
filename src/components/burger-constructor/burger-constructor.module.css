@@ -1,0 +1,31 @@
+.ingredients-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.constructor-element-container {
+  display: grid;
+  grid-template-columns: 30px 530px;
+  gap: 10px;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+}
+
+.total-price-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.total-price-container svg {
+  width: 33px;
+  height: 33px;
+}
+
+.cunstructor-footer {
+  display: flex;
+  align-items: center;
+}
