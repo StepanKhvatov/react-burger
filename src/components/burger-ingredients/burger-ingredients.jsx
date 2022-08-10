@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
-import { burgerIngredients as mockData } from "../../utils/data";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 import PropTypes from "prop-types";
@@ -13,10 +12,10 @@ const localizedTypes = {
   sauce: "соусы",
 };
 
-const BurgerIngredients = ({ data = mockData }) => {
+const BurgerIngredients = ({ ingredients }) => {
   const [currentType, setCurrentType] = useState("bun");
 
-  const burderIngredientsByType = data.reduce(
+  const ingredientsByType = ingredients.reduce(
     (acc, item) => {
       const type = item.type;
 
@@ -63,7 +62,7 @@ const BurgerIngredients = ({ data = mockData }) => {
         style={{ maxHeight: 660, overflowY: "scroll" }}
         className={`${customScrollbarStyles["custom-scrollbar"]} pr-5`}
       >
-        {Object.entries(burderIngredientsByType).map(
+        {Object.entries(ingredientsByType).map(
           ([type, ingredients], _, index) => {
             return (
               <div key={type} className={`pb-5 ${index ? "" : "pt-5"}`}>
@@ -76,15 +75,7 @@ const BurgerIngredients = ({ data = mockData }) => {
                   className={burgerIngredientsStyles["ingredients-container"]}
                 >
                   {ingredients.map((item) => (
-                    <BurgerIngredientCard
-                      key={item._id}
-                      name={item.name}
-                      proteins={item.proteins}
-                      fat={item.fat}
-                      carbohydrates={item.carbohydrates}
-                      price={item.price}
-                      image={item.image}
-                    />
+                    <BurgerIngredientCard key={item._id} ingredient={item} />
                   ))}
                 </ul>
               </div>
@@ -99,5 +90,5 @@ const BurgerIngredients = ({ data = mockData }) => {
 export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes.isRequired),
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 };

@@ -1,15 +1,16 @@
 import {
+  CurrencyIcon,
   DragIcon,
   ConstructorElement,
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { burgerIngredients as mockData } from "../../utils/data";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 import PropTypes from "prop-types";
 import { ingredientPropTypes } from "../../utils/types";
 
-const BurgerConstructor = ({ data = mockData }) => {
-  const ingredients = data.reduce(
+const BurgerConstructor = ({ ingredients }) => {
+  const sortedIngredients = ingredients.reduce(
     (acc, item) => {
       const key = item.type === "bun" ? "blocked" : "unblocked";
 
@@ -21,7 +22,7 @@ const BurgerConstructor = ({ data = mockData }) => {
     { blocked: [], unblocked: [] }
   );
 
-  const [topIngredient, bottomIngredient] = ingredients.blocked;
+  const [blockedBun] = sortedIngredients.blocked;
 
   return (
     <div className={burgerConstructorStyles["ingredients-container"]}>
@@ -32,17 +33,17 @@ const BurgerConstructor = ({ data = mockData }) => {
           <ConstructorElement
             isLocked
             type="top"
-            text={topIngredient.name}
-            price={topIngredient.price}
-            thumbnail={topIngredient.image}
+            text={`${blockedBun.name} (верх)`}
+            price={blockedBun.price}
+            thumbnail={blockedBun.image}
           />
         </div>
       </div>
       <div
-        style={{ maxHeight: 660, overflowY: "scroll" }}
+        style={{ maxHeight: 460, overflowY: "scroll" }}
         className={`${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-6`}
       >
-        {ingredients.unblocked.map((item) => {
+        {sortedIngredients.unblocked.map((item) => {
           return (
             <div
               key={item._id}
@@ -70,11 +71,22 @@ const BurgerConstructor = ({ data = mockData }) => {
           <ConstructorElement
             isLocked
             type="bottom"
-            text={bottomIngredient.name}
-            price={bottomIngredient.price}
-            thumbnail={bottomIngredient.image}
+            text={`${blockedBun.name} (низ)`}
+            price={blockedBun.price}
+            thumbnail={blockedBun.image}
           />
         </div>
+      </div>
+      <div className={`${burgerConstructorStyles["cunstructor-footer"]} mt-10`}>
+        <div
+          className={`${burgerConstructorStyles["total-price-container"]} mr-10`}
+        >
+          <span className="text text_type_digits-medium">1312</span>
+          <CurrencyIcon width={50} type="primary" />
+        </div>
+        <Button type="primary" size="large">
+          Оформить заказ
+        </Button>
       </div>
     </div>
   );
@@ -83,5 +95,5 @@ const BurgerConstructor = ({ data = mockData }) => {
 export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes.isRequired),
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 };
