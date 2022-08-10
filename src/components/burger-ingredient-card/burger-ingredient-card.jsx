@@ -1,4 +1,7 @@
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  Counter,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientCardStyles from "./burger-ingredient-card.module.css";
 import { ingredientPropTypes } from "../../utils/types";
 
@@ -7,6 +10,7 @@ const BurgerIngredientCard = ({ ingredient }) => {
 
   return (
     <li className={`${burgerIngredientCardStyles.card} p-3`}>
+      <Counter count={1} size="default" />
       <img
         alt={name}
         className={burgerIngredientCardStyles.image}
