@@ -5,8 +5,7 @@ const OrderDetails = ({ orderId }) => {
   return (
     <div className={orderDetailsStyles.container}>
       <span className="text text_type_digits-large mb-8">{orderId}</span>
-      <p className="text text_type_main-medium">идентификатор заказа</p>
-
+      <h4 className="text text_type_main-medium">идентификатор заказа</h4>
       <img
         alt="done-icon"
         src={doneImage}
