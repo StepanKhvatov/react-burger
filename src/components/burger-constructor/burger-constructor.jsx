@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   CurrencyIcon,
   DragIcon,
@@ -8,6 +9,37 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 import PropTypes from "prop-types";
 import { ingredientPropTypes } from "../../utils/types";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+
+const ORDER_ID = 1234536;
+
+const BurgerConstructorFooter = () => {
+  const [isOrderModalOpen, setOrderModalOpen] = useState(false);
+
+  return (
+    <div className={`${burgerConstructorStyles["cunstructor-footer"]} mt-10`}>
+      <div
+        className={`${burgerConstructorStyles["total-price-container"]} mr-10`}
+      >
+        <span className="text text_type_digits-medium">1312</span>
+        <CurrencyIcon width={50} type="primary" />
+      </div>
+      <Button
+        type="primary"
+        size="large"
+        onClick={() => setOrderModalOpen(true)}
+      >
+        Оформить заказ
+      </Button>
+      {isOrderModalOpen && (
+        <Modal onClose={() => setOrderModalOpen(false)}>
+          <OrderDetails orderId={ORDER_ID} />
+        </Modal>
+      )}
+    </div>
+  );
+};
 
 const BurgerConstructor = ({ ingredients }) => {
   const sortedIngredients = ingredients.reduce(
@@ -77,17 +109,7 @@ const BurgerConstructor = ({ ingredients }) => {
           />
         </div>
       </div>
-      <div className={`${burgerConstructorStyles["cunstructor-footer"]} mt-10`}>
-        <div
-          className={`${burgerConstructorStyles["total-price-container"]} mr-10`}
-        >
-          <span className="text text_type_digits-medium">1312</span>
-          <CurrencyIcon width={50} type="primary" />
-        </div>
-        <Button type="primary" size="large">
-          Оформить заказ
-        </Button>
-      </div>
+      <BurgerConstructorFooter />
     </div>
   );
 };

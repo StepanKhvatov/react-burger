@@ -3,12 +3,12 @@ import ingredientDetailsStyles from "./ingredient-details.module.css";
 import InfoColumn from "../info-column/info-column";
 
 const IngredientDetails = ({ ingredient }) => {
-  const { image, name, calories, fat, proteins, carbohydrates } = ingredient;
+  const { image_large, name, calories, fat, proteins, carbohydrates } = ingredient;
 
   return (
     <div className={ingredientDetailsStyles.container}>
       <img
-        src={image}
+        src={image_large}
         alt={name}
         className={`${ingredientDetailsStyles.image} mb-4`}
       />

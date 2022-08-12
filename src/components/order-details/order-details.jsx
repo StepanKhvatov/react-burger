@@ -3,7 +3,7 @@ import orderDetailsStyles from "./order-details.module.css";
 
 const OrderDetails = ({ orderId }) => {
   return (
-    <div className={orderDetailsStyles.container}>
+    <div className={`${orderDetailsStyles.container} pt-15 pb-15`}>
       <span className="text text_type_digits-large mb-8">{orderId}</span>
       <h4 className="text text_type_main-medium">идентификатор заказа</h4>
       <img
