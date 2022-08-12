@@ -7,8 +7,8 @@ import modalStyles from "./modal.module.css";
 
 const Modal = ({ children, onClose, title }) => {
   useEffect(() => {
-    const closeModal = (e) => {
-      if (e.code === `Escape`) {
+    const closeModal = (event) => {
+      if (event.code === `Escape`) {
         onClose();
       }
     };
@@ -31,12 +31,17 @@ const Modal = ({ children, onClose, title }) => {
           onClick={(event) => event.stopPropagation()}
           className={`${modalStyles.modal} pr-10 pl-10 pt-15 pb-15`}
         >
-          {title && <h3 className="text text_type_main-large">{title}</h3>}
+          {title && (
+            <h3 className={`${modalStyles.title} text text_type_main-large`}>
+              {title}
+            </h3>
+          )}
           {children}
           <button
             aria-label="modal-close-button"
             type="button"
             className={modalStyles["close-button"]}
+            onClick={onClose}
           >
             <CloseIcon />
           </button>

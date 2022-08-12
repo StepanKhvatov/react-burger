@@ -19,7 +19,7 @@ const App = () => {
         return res;
       })
       .catch((error) => {
-        console.log("Fetch data error", error.message);
+        console.error("Fetch ingredients data error", error.message);
       });
   }, []);
 
