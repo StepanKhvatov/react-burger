@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import infoColumnStyles from "./info-column.module.css";
 
 const InfoColumn = ({ title, value }) => {
@@ -11,6 +12,11 @@ const InfoColumn = ({ title, value }) => {
       </p>
     </div>
   );
+};
+
+InfoColumn.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default InfoColumn;

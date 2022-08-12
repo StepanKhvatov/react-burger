@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import Portal from "../portal/portal";
@@ -43,6 +44,12 @@ const Modal = ({ children, onClose, title }) => {
       </ModalOverlay>
     </Portal>
   );
+};
+
+Modal.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClose: PropTypes.func.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default Modal;

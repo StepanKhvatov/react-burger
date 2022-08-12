@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import PropTypes from "prop-types";
 
 const Portal = ({ children }) => {
   const [modalRoot, setModalRoot] = useState(
@@ -19,6 +20,10 @@ const Portal = ({ children }) => {
   }, [modalRoot]);
 
   return modalRoot ? createPortal(children, modalRoot) : null;
+};
+
+Portal.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default Portal;

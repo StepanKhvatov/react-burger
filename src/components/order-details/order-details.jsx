@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import doneImage from "../../images/done.png";
 import orderDetailsStyles from "./order-details.module.css";
 
@@ -21,6 +22,10 @@ const OrderDetails = ({ orderId }) => {
       </div>
     </div>
   );
+};
+
+OrderDetails.propTypes = {
+  orderId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default OrderDetails;
