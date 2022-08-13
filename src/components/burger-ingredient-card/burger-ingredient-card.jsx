@@ -47,6 +47,7 @@ const BurgerIngredientCard = ({ ingredient }) => {
       </li>
       {isOpenInrgedientModal && (
         <Modal
+          isOpen={isOpenInrgedientModal}
           onClose={() => setOpenIngredientModal(false)}
           title="Детали ингредиента"
         >

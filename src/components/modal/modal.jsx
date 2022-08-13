@@ -5,24 +5,22 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import Portal from "../portal/portal";
 import modalStyles from "./modal.module.css";
 
-const Modal = ({ children, onClose, title }) => {
+const Modal = ({ children, onClose, title, isOpen }) => {
   useEffect(() => {
-    const closeModal = (event) => {
+    const closeByEscape = (event) => {
       if (event.code === `Escape`) {
         onClose();
       }
     };
 
-    window.addEventListener(`keydown`, closeModal);
+    if (isOpen) {
+      document.addEventListener("keydown", closeByEscape);
 
-    document.body.classList.add("hide-overlow_active");
-
-    return () => {
-      window.removeEventListener(`keydown`, closeModal);
-
-      document.body.classList.remove("hide-overlow_active");
-    };
-  }, [onClose]);
+      return () => {
+        document.removeEventListener("keydown", closeByEscape);
+      };
+    }
+  }, [onClose, isOpen]);
 
   return (
     <Portal>
@@ -55,6 +53,7 @@ Modal.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default Modal;

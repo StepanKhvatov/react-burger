@@ -33,7 +33,10 @@ const BurgerConstructorFooter = () => {
         Оформить заказ
       </Button>
       {isOrderModalOpen && (
-        <Modal onClose={() => setOrderModalOpen(false)}>
+        <Modal
+          isOpen={isOrderModalOpen}
+          onClose={() => setOrderModalOpen(false)}
+        >
           <OrderDetails orderId={ORDER_ID} />
         </Modal>
       )}

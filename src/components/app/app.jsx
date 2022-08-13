@@ -9,7 +9,11 @@ const App = () => {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/ingredients`)
       .then((res) => {
-        return res.json();
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Ошибка ${res.status}`);
       })
       .then((res) => {
         if (res.success) {
@@ -19,7 +23,10 @@ const App = () => {
         return res;
       })
       .catch((error) => {
-        console.error("Fetch ingredients data error", error.message);
+        console.error(
+          "Ошибка при получении данных ингредиентов:",
+          error?.message || error
+        );
       });
   }, []);
 
