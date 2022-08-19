@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   CurrencyIcon,
   DragIcon,
@@ -7,10 +7,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
-import PropTypes from "prop-types";
-import { ingredientPropTypes } from "../../utils/types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { IngredientsContext } from "../../services/ingredientsContext";
 
 const ORDER_ID = 1234536;
 
@@ -44,7 +43,9 @@ const BurgerConstructorFooter = () => {
   );
 };
 
-const BurgerConstructor = ({ ingredients }) => {
+const BurgerConstructor = () => {
+  const ingredients = useContext(IngredientsContext);
+
   const sortedIngredients = ingredients.reduce(
     (acc, item) => {
       const key = item.type === "bun" ? "blocked" : "unblocked";
@@ -118,7 +119,3 @@ const BurgerConstructor = ({ ingredients }) => {
 };
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-};
