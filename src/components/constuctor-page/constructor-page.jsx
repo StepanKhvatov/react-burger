@@ -1,5 +1,7 @@
+import PropTypes from "prop-types";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { ingredientPropTypes } from "../../utils/types";
 import constructorPageStyles from "./constructor-page.module.css";
 
 const ConstructorPage = ({ ingredients }) => {
@@ -14,6 +16,10 @@ const ConstructorPage = ({ ingredients }) => {
       </main>
     </section>
   );
+};
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
 };
 
 export default ConstructorPage;

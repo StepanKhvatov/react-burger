@@ -66,11 +66,11 @@ const BurgerIngredients = ({ ingredients }) => {
           ([type, ingredients], _, index) => {
             return (
               <div key={type} className={`pb-5 ${index ? "" : "pt-5"}`}>
-                <h3
+                <h2
                   className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
                 >
                   {localizedTypes[type]}
-                </h3>
+                </h2>
                 <ul
                   className={burgerIngredientsStyles["ingredients-container"]}
                 >
