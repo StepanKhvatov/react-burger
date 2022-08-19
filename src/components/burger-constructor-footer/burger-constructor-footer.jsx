@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   CurrencyIcon,
   Button,
@@ -6,10 +6,11 @@ import {
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import burgerConstructorStyles from "../burger-constructor/burger-constructor.module.css";
-
-const ORDER_ID = 1234536;
+import { OrdersContext } from "../../services/ordersContext";
 
 const BurgerConstructorFooter = ({ state }) => {
+  const [orders, setOrders] = useContext(OrdersContext);
+
   const [isOrderModalOpen, setOrderModalOpen] = useState(false);
 
   const onSumbit = () => {
@@ -34,9 +35,18 @@ const BurgerConstructorFooter = ({ state }) => {
         return Promise.reject(`Ошибка ${res.status}`);
       })
       .then((res) => {
-        console.log("res", res);
+        if (res.success) {
+          setOrders([res.order, ...orders]);
+          setOrderModalOpen(true);
+        }
+
+        return res;
+      })
+      .catch((error) => {
+        console.error("Ошибка при создании заказа:", error?.message || error);
       });
   };
+
   return (
     <div className={`${burgerConstructorStyles["cunstructor-footer"]} mt-10`}>
       <div
@@ -48,12 +58,12 @@ const BurgerConstructorFooter = ({ state }) => {
       <Button type="primary" size="large" onClick={onSumbit}>
         Оформить заказ
       </Button>
-      {isOrderModalOpen && (
+      {isOrderModalOpen && orders[0].number && (
         <Modal
           isOpen={isOrderModalOpen}
           onClose={() => setOrderModalOpen(false)}
         >
-          <OrderDetails orderId={ORDER_ID} />
+          <OrderDetails orderId={orders[0].number} />
         </Modal>
       )}
     </div>
