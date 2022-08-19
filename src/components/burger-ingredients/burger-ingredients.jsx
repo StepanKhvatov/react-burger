@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
-import PropTypes from "prop-types";
-import { ingredientPropTypes } from "../../utils/types";
+import { IngredientsContext } from "../../services/ingredientsContext";
 
 const localizedTypes = {
   bun: "булки",
@@ -12,7 +11,9 @@ const localizedTypes = {
   sauce: "соусы",
 };
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = () => {
+  const ingredients = useContext(IngredientsContext);
+
   const [currentType, setCurrentType] = useState("bun");
 
   const ingredientsByType = ingredients.reduce(
@@ -88,7 +89,3 @@ const BurgerIngredients = ({ ingredients }) => {
 };
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-};
