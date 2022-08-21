@@ -7,6 +7,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import burgerConstructorStyles from "../burger-constructor/burger-constructor.module.css";
 import { OrdersContext } from "../../services/ordersContext";
+import { checkResponse } from "../../utils/api";
 
 const BurgerConstructorFooter = ({ state }) => {
   const [orders, setOrders] = useContext(OrdersContext);
@@ -27,13 +28,7 @@ const BurgerConstructorFooter = ({ state }) => {
       },
       body: JSON.stringify({ ingredients: ingredientsIds }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
+      .then(checkResponse)
       .then((res) => {
         if (res.success) {
           setOrders([res.order, ...orders]);

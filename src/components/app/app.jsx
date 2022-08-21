@@ -4,6 +4,7 @@ import AppHeader from "../app-header/app-header";
 import ConstructorPage from "../constuctor-page/constructor-page";
 import { IngredientsContext } from "../../services/ingredientsContext";
 import { OrdersContext } from "../../services/ordersContext";
+import { checkResponse } from "../../utils/api";
 
 const App = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -11,13 +12,7 @@ const App = () => {
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/ingredients`)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
+      .then(checkResponse)
       .then((res) => {
         if (res.success) {
           return setIngredients(res.data);
