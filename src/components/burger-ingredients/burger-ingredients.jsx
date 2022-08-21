@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useMemo } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
@@ -16,17 +16,19 @@ const BurgerIngredients = () => {
 
   const [currentType, setCurrentType] = useState("bun");
 
-  const ingredientsByType = ingredients.reduce(
-    (acc, item) => {
-      const type = item.type;
+  const ingredientsByType = useMemo(() => {
+    return ingredients.reduce(
+      (acc, item) => {
+        const type = item.type;
 
-      return {
-        ...acc,
-        [type]: [...acc[type], item],
-      };
-    },
-    { bun: [], main: [], sauce: [] }
-  );
+        return {
+          ...acc,
+          [type]: [...acc[type], item],
+        };
+      },
+      { bun: [], main: [], sauce: [] }
+    );
+  }, [ingredients]);
 
   return (
     <div className={burgerIngredientsStyles["burger-ingredients"]}>
@@ -60,8 +62,7 @@ const BurgerIngredients = () => {
         </li>
       </ul>
       <div
-        style={{ maxHeight: 660, overflowY: "scroll" }}
-        className={`${customScrollbarStyles["custom-scrollbar"]} pr-5`}
+        className={`${burgerIngredientsStyles["scroll-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-5`}
       >
         {Object.entries(ingredientsByType).map(
           ([type, ingredients], _, index) => {

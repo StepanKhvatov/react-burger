@@ -71,7 +71,9 @@ const BurgerConstructor = () => {
         <div
           className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
         >
-          <div style={{ gridColumnStart: 2, gridColumnEnd: 3 }}>
+          <div
+            className={burgerConstructorStyles["blocked-ingredient-container"]}
+          >
             <ConstructorElement
               isLocked
               type="top"
@@ -83,8 +85,7 @@ const BurgerConstructor = () => {
         </div>
       )}
       <div
-        style={{ maxHeight: 460, overflowY: "scroll" }}
-        className={`${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-6`}
+        className={`${burgerConstructorStyles["scroll-container"]} ${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-6`}
       >
         {state.unblocked.map((item) => {
           return (
@@ -111,7 +112,9 @@ const BurgerConstructor = () => {
         <div
           className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
         >
-          <div style={{ gridColumnStart: 2, gridColumnEnd: 3 }}>
+          <div
+            className={burgerConstructorStyles["blocked-ingredient-container"]}
+          >
             <ConstructorElement
               isLocked
               type="bottom"
