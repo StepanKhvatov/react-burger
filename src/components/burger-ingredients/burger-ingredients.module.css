@@ -20,3 +20,8 @@
 .type {
   text-transform: capitalize;
 }
+
+.scroll-container {
+  max-height: 660px;
+  overflow-y: scroll;
+}

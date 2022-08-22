@@ -1,84 +1,93 @@
-import { useState } from "react";
+import { useContext, useReducer, useEffect } from "react";
 import {
-  CurrencyIcon,
   DragIcon,
   ConstructorElement,
-  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import burgerConstructorStyles from "./burger-constructor.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
-import PropTypes from "prop-types";
-import { ingredientPropTypes } from "../../utils/types";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
+import BurgerConstructorFooter from "../burger-constructor-footer/burger-constructor-footer";
+import { IngredientsContext } from "../../services/ingredientsContext";
+import burgerConstructorStyles from "./burger-constructor.module.css";
 
-const ORDER_ID = 1234536;
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "set":
+      const ingredients = action.payload;
 
-const BurgerConstructorFooter = () => {
-  const [isOrderModalOpen, setOrderModalOpen] = useState(false);
+      const sortedIngredients = ingredients.reduce(
+        (acc, item) => {
+          const key = item.type === "bun" ? "blocked" : "unblocked";
 
-  return (
-    <div className={`${burgerConstructorStyles["cunstructor-footer"]} mt-10`}>
-      <div
-        className={`${burgerConstructorStyles["total-price-container"]} mr-10`}
-      >
-        <span className="text text_type_digits-medium">1312</span>
-        <CurrencyIcon width={50} type="primary" />
-      </div>
-      <Button
-        type="primary"
-        size="large"
-        onClick={() => setOrderModalOpen(true)}
-      >
-        Оформить заказ
-      </Button>
-      {isOrderModalOpen && (
-        <Modal
-          isOpen={isOrderModalOpen}
-          onClose={() => setOrderModalOpen(false)}
-        >
-          <OrderDetails orderId={ORDER_ID} />
-        </Modal>
-      )}
-    </div>
-  );
-};
+          return {
+            ...acc,
+            [key]: [...acc[key], item],
+          };
+        },
+        { blocked: [], unblocked: [] }
+      );
 
-const BurgerConstructor = ({ ingredients }) => {
-  const sortedIngredients = ingredients.reduce(
-    (acc, item) => {
-      const key = item.type === "bun" ? "blocked" : "unblocked";
+      const unblockedIngredients = sortedIngredients.unblocked;
+
+      const [bun] = sortedIngredients.blocked;
+
+      const total =
+        bun.price * 2 +
+        unblockedIngredients.reduce((acc, item) => {
+          return acc + item.price;
+        }, 0);
 
       return {
-        ...acc,
-        [key]: [...acc[key], item],
+        ...state,
+        bun: bun,
+        unblocked: unblockedIngredients,
+        total: total,
       };
-    },
-    { blocked: [], unblocked: [] }
-  );
+    default:
+      throw new Error(`Wrong type of action: ${action.type}`);
+  }
+};
 
-  const [blockedBun] = sortedIngredients.blocked;
+const initialState = {
+  bun: null,
+  unblocked: [],
+  total: 0,
+};
+
+const BurgerConstructor = () => {
+  const ingredients = useContext(IngredientsContext);
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    if (ingredients.length) {
+      dispatch({ type: "set", payload: ingredients });
+    }
+  }, [ingredients]);
+
+  const blockedBun = state.bun;
 
   return (
     <div className={burgerConstructorStyles["ingredients-container"]}>
-      <div
-        className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
-      >
-        <div style={{ gridColumnStart: 2, gridColumnEnd: 3 }}>
-          <ConstructorElement
-            isLocked
-            type="top"
-            text={`${blockedBun.name} (верх)`}
-            price={blockedBun.price}
-            thumbnail={blockedBun.image}
-          />
+      {blockedBun && (
+        <div
+          className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
+        >
+          <div
+            className={burgerConstructorStyles["blocked-ingredient-container"]}
+          >
+            <ConstructorElement
+              isLocked
+              type="top"
+              text={`${blockedBun.name} (верх)`}
+              price={blockedBun.price}
+              thumbnail={blockedBun.image}
+            />
+          </div>
         </div>
-      </div>
+      )}
       <div
-        style={{ maxHeight: 460, overflowY: "scroll" }}
-        className={`${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-6`}
+        className={`${burgerConstructorStyles["scroll-container"]} ${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-6`}
       >
-        {sortedIngredients.unblocked.map((item) => {
+        {state.unblocked.map((item) => {
           return (
             <div
               key={item._id}
@@ -99,26 +108,26 @@ const BurgerConstructor = ({ ingredients }) => {
           );
         })}
       </div>
-      <div
-        className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
-      >
-        <div style={{ gridColumnStart: 2, gridColumnEnd: 3 }}>
-          <ConstructorElement
-            isLocked
-            type="bottom"
-            text={`${blockedBun.name} (низ)`}
-            price={blockedBun.price}
-            thumbnail={blockedBun.image}
-          />
+      {blockedBun && (
+        <div
+          className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
+        >
+          <div
+            className={burgerConstructorStyles["blocked-ingredient-container"]}
+          >
+            <ConstructorElement
+              isLocked
+              type="bottom"
+              text={`${blockedBun.name} (низ)`}
+              price={blockedBun.price}
+              thumbnail={blockedBun.image}
+            />
+          </div>
         </div>
-      </div>
-      <BurgerConstructorFooter />
+      )}
+      <BurgerConstructorFooter state={state} />
     </div>
   );
 };
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-};

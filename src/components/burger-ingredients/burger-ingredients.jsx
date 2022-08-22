@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useContext, useMemo } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
-import PropTypes from "prop-types";
-import { ingredientPropTypes } from "../../utils/types";
+import { IngredientsContext } from "../../services/ingredientsContext";
 
 const localizedTypes = {
   bun: "булки",
@@ -12,20 +11,24 @@ const localizedTypes = {
   sauce: "соусы",
 };
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = () => {
+  const ingredients = useContext(IngredientsContext);
+
   const [currentType, setCurrentType] = useState("bun");
 
-  const ingredientsByType = ingredients.reduce(
-    (acc, item) => {
-      const type = item.type;
+  const ingredientsByType = useMemo(() => {
+    return ingredients.reduce(
+      (acc, item) => {
+        const type = item.type;
 
-      return {
-        ...acc,
-        [type]: [...acc[type], item],
-      };
-    },
-    { bun: [], main: [], sauce: [] }
-  );
+        return {
+          ...acc,
+          [type]: [...acc[type], item],
+        };
+      },
+      { bun: [], main: [], sauce: [] }
+    );
+  }, [ingredients]);
 
   return (
     <div className={burgerIngredientsStyles["burger-ingredients"]}>
@@ -59,8 +62,7 @@ const BurgerIngredients = ({ ingredients }) => {
         </li>
       </ul>
       <div
-        style={{ maxHeight: 660, overflowY: "scroll" }}
-        className={`${customScrollbarStyles["custom-scrollbar"]} pr-5`}
+        className={`${burgerIngredientsStyles["scroll-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-5`}
       >
         {Object.entries(ingredientsByType).map(
           ([type, ingredients], _, index) => {
@@ -88,7 +90,3 @@ const BurgerIngredients = ({ ingredients }) => {
 };
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-};
