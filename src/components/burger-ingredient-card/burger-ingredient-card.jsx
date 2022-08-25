@@ -7,15 +7,34 @@ import burgerIngredientCardStyles from "./burger-ingredient-card.module.css";
 import { ingredientPropTypes } from "../../utils/types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { useDispatch } from "react-redux";
+import {
+  setViewedIngredient,
+  removeViewedIngredient,
+} from "../../services/actions/viewed-ingredient";
 
 const BurgerIngredientCard = ({ ingredient }) => {
+  const dispatch = useDispatch();
+
   const [isOpenInrgedientModal, setOpenIngredientModal] = useState(false);
 
   const { name, price, image } = ingredient;
 
+  const handleSetViewedIngredient = () => {
+    setOpenIngredientModal(true);
+
+    dispatch(setViewedIngredient(ingredient));
+  };
+
+  const handleRemoveViewedIngredient = () => {
+    setOpenIngredientModal(false);
+
+    dispatch(removeViewedIngredient());
+  };
+
   const onKeydownSelect = (event) => {
     if (event.key === "Enter") {
-      setOpenIngredientModal(true);
+      handleSetViewedIngredient();
     }
   };
 
@@ -24,7 +43,7 @@ const BurgerIngredientCard = ({ ingredient }) => {
       <li
         tabIndex={0}
         onKeyDown={onKeydownSelect}
-        onClick={() => setOpenIngredientModal(true)}
+        onClick={handleSetViewedIngredient}
         className={`${burgerIngredientCardStyles.card} m-3`}
       >
         <Counter count={1} size="default" />
@@ -48,10 +67,10 @@ const BurgerIngredientCard = ({ ingredient }) => {
       {isOpenInrgedientModal && (
         <Modal
           isOpen={isOpenInrgedientModal}
-          onClose={() => setOpenIngredientModal(false)}
+          onClose={handleRemoveViewedIngredient}
           title="Детали ингредиента"
         >
-          <IngredientDetails ingredient={ingredient}></IngredientDetails>
+          <IngredientDetails />
         </Modal>
       )}
     </>
