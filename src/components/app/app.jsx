@@ -5,10 +5,18 @@ import ConstructorPage from "../constuctor-page/constructor-page";
 import { IngredientsContext } from "../../services/ingredientsContext";
 import { OrdersContext } from "../../services/ordersContext";
 import { checkResponse } from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { getIngredients } from "../../services/actions/ingredients";
 
 const App = () => {
+  const dispatch = useDispatch();
+
   const [ingredients, setIngredients] = useState([]);
   const ordersState = useState([]);
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/ingredients`)

@@ -64,26 +64,22 @@ const BurgerIngredients = () => {
       <div
         className={`${burgerIngredientsStyles["scroll-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-5`}
       >
-        {Object.entries(ingredientsByType).map(
-          ([type, ingredients], _, index) => {
-            return (
-              <div key={type} className={`pb-5 ${index ? "" : "pt-5"}`}>
-                <h2
-                  className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
-                >
-                  {localizedTypes[type]}
-                </h2>
-                <ul
-                  className={burgerIngredientsStyles["ingredients-container"]}
-                >
-                  {ingredients.map((item) => (
-                    <BurgerIngredientCard key={item._id} ingredient={item} />
-                  ))}
-                </ul>
-              </div>
-            );
-          }
-        )}
+        {Object.entries(ingredientsByType).map(([type, ingredients], index) => {
+          return (
+            <div key={type} className={`pb-5 ${index ? "" : "pt-5"}`}>
+              <h2
+                className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
+              >
+                {localizedTypes[type]}
+              </h2>
+              <ul className={burgerIngredientsStyles["ingredients-container"]}>
+                {ingredients.map((item) => (
+                  <BurgerIngredientCard key={item._id} ingredient={item} />
+                ))}
+              </ul>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
