@@ -1,12 +1,13 @@
-import { useContext, useReducer, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 import BurgerConstructorFooter from "../burger-constructor-footer/burger-constructor-footer";
-import { IngredientsContext } from "../../services/ingredientsContext";
 import burgerConstructorStyles from "./burger-constructor.module.css";
+import { selectIngredients } from "../../services/selectors/ingredients";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -53,7 +54,7 @@ const initialState = {
 };
 
 const BurgerConstructor = () => {
-  const ingredients = useContext(IngredientsContext);
+  const ingredients = useSelector(selectIngredients);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 

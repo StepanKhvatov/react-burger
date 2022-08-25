@@ -1,9 +1,11 @@
-import { useState, useContext, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
-import { IngredientsContext } from "../../services/ingredientsContext";
+import { useSelector, useDispatch } from "react-redux";
+import { getIngredients } from "../../services/actions/ingredients";
+import { selectIngredientsByType } from "../../services/selectors/ingredients";
 
 const localizedTypes = {
   bun: "булки",
@@ -12,23 +14,15 @@ const localizedTypes = {
 };
 
 const BurgerIngredients = () => {
-  const ingredients = useContext(IngredientsContext);
+  const dispatch = useDispatch();
+
+  const ingredientsByType = useSelector(selectIngredientsByType);
 
   const [currentType, setCurrentType] = useState("bun");
 
-  const ingredientsByType = useMemo(() => {
-    return ingredients.reduce(
-      (acc, item) => {
-        const type = item.type;
-
-        return {
-          ...acc,
-          [type]: [...acc[type], item],
-        };
-      },
-      { bun: [], main: [], sauce: [] }
-    );
-  }, [ingredients]);
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <div className={burgerIngredientsStyles["burger-ingredients"]}>
