@@ -7,14 +7,28 @@ import burgerIngredientCardStyles from "./burger-ingredient-card.module.css";
 import { ingredientPropTypes } from "../../utils/types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setViewedIngredient,
   removeViewedIngredient,
 } from "../../services/actions/viewed-ingredient";
+import { useDrag } from "react-dnd";
+import { selectIngredientQuantity } from "../../services/selectors/ingredients-constructor";
 
 const BurgerIngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
+
+  const ingredientQuantity = useSelector((store) =>
+    selectIngredientQuantity(store, ingredient)
+  );
+
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredients",
+    item: ingredient,
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
 
   const [isOpenInrgedientModal, setOpenIngredientModal] = useState(false);
 
@@ -41,12 +55,17 @@ const BurgerIngredientCard = ({ ingredient }) => {
   return (
     <>
       <li
+        ref={dragRef}
         tabIndex={0}
+        style={{ opacity: isDrag ? "0.6" : 1 }}
         onKeyDown={onKeydownSelect}
         onClick={handleSetViewedIngredient}
         className={`${burgerIngredientCardStyles.card} m-3`}
       >
-        <Counter count={1} size="default" />
+        {!!ingredientQuantity && (
+          <Counter count={ingredientQuantity} size="default" />
+        )}
+
         <img
           alt={name}
           className={burgerIngredientCardStyles.image}
