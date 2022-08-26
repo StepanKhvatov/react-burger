@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import {
   CurrencyIcon,
   Button,
@@ -6,11 +6,11 @@ import {
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import burgerConstructorStyles from "../burger-constructor/burger-constructor.module.css";
-import { OrdersContext } from "../../services/ordersContext";
-import { checkResponse } from "../../utils/api";
+import { useDispatch } from "react-redux";
+import { createOrder } from "../../services/actions/order";
 
 const BurgerConstructorFooter = ({ state }) => {
-  const [orders, setOrders] = useContext(OrdersContext);
+  const dispatch = useDispatch();
 
   const [isOrderModalOpen, setOrderModalOpen] = useState(false);
 
@@ -21,25 +21,13 @@ const BurgerConstructorFooter = ({ state }) => {
 
     const ingredientsIds = [...mainIngredientsIds, bunId, bunId];
 
-    fetch(`${process.env.REACT_APP_API_URL}/api/orders`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ ingredients: ingredientsIds }),
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res.success) {
-          setOrders([res.order, ...orders]);
-          setOrderModalOpen(true);
-        }
+    dispatch(createOrder(ingredientsIds)).then((res) => {
+      if (res.payload.number) {
+        setOrderModalOpen(true);
+      }
 
-        return res;
-      })
-      .catch((error) => {
-        console.error("Ошибка при создании заказа:", error?.message || error);
-      });
+      return res;
+    });
   };
 
   return (
@@ -53,12 +41,12 @@ const BurgerConstructorFooter = ({ state }) => {
       <Button type="primary" size="large" onClick={onSumbit}>
         Оформить заказ
       </Button>
-      {isOrderModalOpen && orders[0].number && (
+      {isOrderModalOpen && (
         <Modal
           isOpen={isOrderModalOpen}
           onClose={() => setOrderModalOpen(false)}
         >
-          <OrderDetails orderId={orders[0].number} />
+          <OrderDetails />
         </Modal>
       )}
     </div>

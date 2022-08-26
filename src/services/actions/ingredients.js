@@ -7,11 +7,11 @@ export const getIngredientsFailed = createAction("ingredients/failed");
 
 export const getIngredientsSuccess = createAction("ingredients/success");
 
-export function getIngredients() {
-  return function (dispatch) {
+export const getIngredients = () => {
+  return async (dispatch) => {
     dispatch(getIngredientsRequest());
 
-    fetch(`${process.env.REACT_APP_API_URL}/api/ingredients`)
+    return fetch(`${process.env.REACT_APP_API_URL}/api/ingredients`)
       .then(checkResponse)
       .then((res) => {
         if (res.success) {
@@ -20,8 +20,13 @@ export function getIngredients() {
 
         return res;
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error(
+          "Ошибка при получении индередиентов:",
+          error?.message || error
+        );
+
         dispatch(getIngredientsFailed());
       });
   };
-}
+};
