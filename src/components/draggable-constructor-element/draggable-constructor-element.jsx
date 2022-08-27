@@ -9,6 +9,8 @@ import {
   updateIngredientsSorting,
 } from "../../services/actions/ingredients-constructor";
 import { useDrag, useDrop } from "react-dnd";
+import { ingredientPropTypes } from "../../utils/types";
+import PropTypes from "prop-types";
 import burgerConstructorStyles from "../burger-constructor/burger-constructor.module.css";
 
 const DraggableConstructorElement = ({ ingredient, itemIndex }) => {
@@ -62,6 +64,11 @@ const DraggableConstructorElement = ({ ingredient, itemIndex }) => {
       </div>
     </li>
   );
+};
+
+DraggableConstructorElement.propTypes = {
+  ingredient: ingredientPropTypes.isRequired,
+  itemIndex: PropTypes.number,
 };
 
 export default DraggableConstructorElement;
