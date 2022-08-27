@@ -14,7 +14,7 @@ import burgerConstructorStyles from "../burger-constructor/burger-constructor.mo
 const DraggableConstructorElement = ({ ingredient, itemIndex }) => {
   const dispatch = useDispatch();
 
-  const [_, dropRef] = useDrop({
+  const [, dropRef] = useDrop({
     accept: "ingredient",
     drop(draggedIngredient) {
       dispatch(updateIngredientsSorting(draggedIngredient, itemIndex));

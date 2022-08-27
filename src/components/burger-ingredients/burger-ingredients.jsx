@@ -7,16 +7,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions/ingredients";
 import { selectIngredientsByType } from "../../services/selectors/ingredients";
 
-const localizedTypes = {
-  bun: "булки",
-  main: "начинки",
-  sauce: "соусы",
+const getOffset = (element, container) => {
+  const offset =
+    element.getBoundingClientRect().top - container.getBoundingClientRect().top;
+
+  return offset;
 };
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
-  const ingredientsByType = useSelector(selectIngredientsByType);
+  const { bun, main, sauce } = useSelector(selectIngredientsByType);
 
   const [currentType, setCurrentType] = useState("bun");
 
@@ -24,56 +25,98 @@ const BurgerIngredients = () => {
     dispatch(getIngredients());
   }, [dispatch]);
 
+  useEffect(() => {
+    const scrollContainer = document.getElementById("scroll-container");
+
+    const listener = (event) => {
+      const { target } = event;
+
+      const childrensArray = Array.from(target.children);
+
+      const offsetsElement = childrensArray.map((item) => {
+        return {
+          offset: Math.abs(getOffset(item, target)),
+          id: item.id,
+        };
+      });
+
+      const nearestElement = offsetsElement.reduce((acc, item) => {
+        if (acc.offset < item.offset) {
+          return acc;
+        }
+
+        return item;
+      }, {});
+
+      setCurrentType(nearestElement.id);
+    };
+
+    scrollContainer.addEventListener("scroll", listener);
+
+    return () => {
+      scrollContainer.removeEventListener("scroll", listener);
+    };
+  }, []);
+
   return (
     <div className={burgerIngredientsStyles["burger-ingredients"]}>
       <ul className={`${burgerIngredientsStyles["tabs-container"]} mb-10`}>
-        <li>
-          <Tab
-            value="bun"
-            active={currentType === "bun"}
-            onClick={setCurrentType}
-          >
+        <li className={burgerIngredientsStyles.tab}>
+          <Tab value="bun" active={currentType === "bun"}>
             Булки
           </Tab>
         </li>
-        <li>
-          <Tab
-            value="sauce"
-            active={currentType === "sauce"}
-            onClick={setCurrentType}
-          >
+        <li className={burgerIngredientsStyles.tab}>
+          <Tab value="sauce" active={currentType === "sauce"}>
             Соусы
           </Tab>
         </li>
-        <li>
-          <Tab
-            value="main"
-            active={currentType === "main"}
-            onClick={setCurrentType}
-          >
+        <li className={burgerIngredientsStyles.tab}>
+          <Tab value="main" active={currentType === "main"}>
             Начинки
           </Tab>
         </li>
       </ul>
       <div
+        id="scroll-container"
         className={`${burgerIngredientsStyles["scroll-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-5`}
       >
-        {Object.entries(ingredientsByType).map(([type, ingredients], index) => {
-          return (
-            <div key={type} className={`pb-5 ${index ? "" : "pt-5"}`}>
-              <h2
-                className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
-              >
-                {localizedTypes[type]}
-              </h2>
-              <ul className={burgerIngredientsStyles["ingredients-container"]}>
-                {ingredients.map((item) => (
-                  <BurgerIngredientCard key={item._id} ingredient={item} />
-                ))}
-              </ul>
-            </div>
-          );
-        })}
+        <div id="bun" className="pb-5">
+          <h2
+            className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
+          >
+            Булки
+          </h2>
+          <ul className={burgerIngredientsStyles["ingredients-container"]}>
+            {bun.map((item) => (
+              <BurgerIngredientCard key={item._id} ingredient={item} />
+            ))}
+          </ul>
+        </div>
+        <div id="sauce" className="pb-5 pt-5">
+          <h2
+            className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
+          >
+            Соусы
+          </h2>
+          <ul className={burgerIngredientsStyles["ingredients-container"]}>
+            {sauce.map((item) => (
+              <BurgerIngredientCard key={item._id} ingredient={item} />
+            ))}
+          </ul>
+        </div>
+        <div id="main" className="pb-5 pt-5">
+          <h2
+            className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
+          >
+            Начинки
+          </h2>
+          <ul className={burgerIngredientsStyles["ingredients-container"]}>
+            {main.map((item) => (
+              <BurgerIngredientCard key={item._id} ingredient={item} />
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
