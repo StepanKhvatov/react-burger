@@ -17,3 +17,15 @@ export const removeIngredient = createAction(
     };
   }
 );
+
+export const updateIngredientsSorting = createAction(
+  "ingredients-constructor/updateIngredientsSorting",
+  (draggedIngredient, targetIngredientIndex) => {
+    return {
+      payload: {
+        draggedIngredient,
+        targetIngredientIndex,
+      },
+    };
+  }
+);

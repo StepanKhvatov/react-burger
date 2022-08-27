@@ -1,17 +1,11 @@
-import { useCallback } from "react";
-import {
-  DragIcon,
-  ConstructorElement,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 import BurgerConstructorFooter from "../burger-constructor-footer/burger-constructor-footer";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { useDrop } from "react-dnd";
-import {
-  insertIngredient,
-  removeIngredient,
-} from "../../services/actions/ingredients-constructor";
+import { insertIngredient } from "../../services/actions/ingredients-constructor";
+import DraggableConstructorElement from "../draggable-constructor-element/draggable-constructor-element";
 import { selectConstructorIngredients } from "../../services/selectors/ingredients-constructor";
 
 const BurgerConstructor = () => {
@@ -29,13 +23,6 @@ const BurgerConstructor = () => {
 
   const { blockedItem, unblockedItems } = useSelector(
     selectConstructorIngredients
-  );
-
-  const handleRemoveIngredient = useCallback(
-    (ingredient, index) => {
-      dispatch(removeIngredient(ingredient, index));
-    },
-    [dispatch]
   );
 
   return (
@@ -64,31 +51,19 @@ const BurgerConstructor = () => {
         </div>
       )}
       {!!unblockedItems.length && (
-        <div
+        <ul
           className={`${burgerConstructorStyles["scroll-container"]} ${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-6`}
         >
           {unblockedItems.map((item, index) => {
             return (
-              <div
+              <DraggableConstructorElement
                 key={`${item._id}-${index}`}
-                className={
-                  burgerConstructorStyles["constructor-element-container"]
-                }
-              >
-                <button aria-label="druggable-button" type="button">
-                  <DragIcon />
-                </button>
-                <ConstructorElement
-                  isLocked={false}
-                  text={item.name}
-                  price={item.price}
-                  thumbnail={item.image}
-                  handleClose={() => handleRemoveIngredient(item, index)}
-                />
-              </div>
+                ingredient={item}
+                itemIndex={index}
+              />
             );
           })}
-        </div>
+        </ul>
       )}
       {blockedItem && (
         <div

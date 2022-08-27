@@ -48,3 +48,11 @@
   grid-column-start: 2;
   grid-column-end: 3;
 }
+
+.constructor-element-draggeble-button {
+  cursor: grab;
+}
+
+.constructor-element-draggeble-button:active {
+  cursor: grabbing;
+}

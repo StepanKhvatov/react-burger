@@ -2,6 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import {
   insertIngredient,
   removeIngredient,
+  updateIngredientsSorting,
 } from "../actions/ingredients-constructor";
 
 const initialState = {
@@ -34,6 +35,27 @@ export const ingredientsConstructorReducer = createReducer(
         state.unblockedItems = state.unblockedItems.filter(
           (_, index) => index !== ingredientIndex
         );
+      })
+      .addCase(updateIngredientsSorting, (state, action) => {
+        const { unblockedItems } = state;
+        const { draggedIngredient, targetIngredientIndex } = action.payload;
+
+        const { item: draggedItem, draggedItemIndex } = draggedIngredient;
+
+        state.unblockedItems = unblockedItems.map((ingredient, index) => {
+          if (
+            ingredient._id === draggedItem._id &&
+            index === draggedItemIndex
+          ) {
+            return unblockedItems[targetIngredientIndex];
+          }
+
+          if (targetIngredientIndex === index) {
+            return draggedItem;
+          }
+
+          return ingredient;
+        });
       })
       .addDefaultCase((state) => state);
   }
