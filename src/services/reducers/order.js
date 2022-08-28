@@ -1,29 +1,32 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
   createOrderRequest,
-  createOrderFailed,
+  createOrderError,
   createOrderSuccess,
+  clearOrderState,
 } from "../actions/order";
 
 const initialState = {
   item: {},
-  itemRequest: false,
-  itemFailed: false,
+  CREATE_ORDER_REQUEST: false,
+  CREATE_ORDER_ERROR: false,
+  CREATE_ORDER_SUCCESS: false,
 };
 
 export const orderReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(createOrderRequest, (state) => {
-      state.itemRequest = true;
+      state.CREATE_ORDER_REQUEST = true;
     })
-    .addCase(createOrderFailed, (state) => {
-      state.itemFailed = true;
-      state.itemRequest = false;
+    .addCase(createOrderError, () => {
+      return { ...initialState, CREATE_ORDER_ERROR: true };
     })
     .addCase(createOrderSuccess, (state, action) => {
-      state.itemRequest = false;
-      state.itemFailed = false;
+      state.CREATE_ORDER_REQUEST = false;
+      state.CREATE_ORDER_ERROR = false;
+      state.CREATE_ORDER_SUCCESS = true;
       state.item = action.payload;
     })
+    .addCase(clearOrderState, () => initialState)
     .addDefaultCase((state) => state);
 });

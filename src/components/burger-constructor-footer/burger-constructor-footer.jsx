@@ -7,7 +7,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import burgerConstructorStyles from "../burger-constructor/burger-constructor.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { createOrder } from "../../services/actions/order";
+import { createOrder, clearOrderState } from "../../services/actions/order";
 import {
   selectIngredientsTotal,
   selectOrderIngredientsIds,
@@ -24,7 +24,7 @@ const BurgerConstructorFooter = () => {
 
   const onSumbit = () => {
     dispatch(createOrder(orderIngredientsIds)).then((res) => {
-      if (res.payload.number) {
+      if (res?.payload?.number) {
         setOrderModalOpen(true);
       }
 
@@ -51,7 +51,10 @@ const BurgerConstructorFooter = () => {
       {isOrderModalOpen && (
         <Modal
           isOpen={isOrderModalOpen}
-          onClose={() => setOrderModalOpen(false)}
+          onClose={() => {
+            setOrderModalOpen(false);
+            dispatch(clearOrderState());
+          }}
         >
           <OrderDetails />
         </Modal>

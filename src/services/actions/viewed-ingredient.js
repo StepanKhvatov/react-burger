@@ -1,7 +1,7 @@
 import { createAction } from "@reduxjs/toolkit";
 
 export const setViewedIngredient = createAction(
-  "viewed-ingredient/setViewedIngredient",
+  "SET_VIEWED_INGREDIENT",
   (item) => {
     return {
       payload: item,
@@ -9,6 +9,4 @@ export const setViewedIngredient = createAction(
   }
 );
 
-export const removeViewedIngredient = createAction(
-  "viewed-ingredient/removeViewedIngredient"
-);
+export const removeViewedIngredient = createAction("REMOVE_VIEWED_INGREDIENT");

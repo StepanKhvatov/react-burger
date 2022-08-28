@@ -1,28 +1,29 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
   getIngredientsRequest,
-  getIngredientsFailed,
+  getIngredientsError,
   getIngredientsSuccess,
 } from "../actions/ingredients";
 
 const initialState = {
   items: [],
-  itemsRequest: false,
-  itemsFailed: false,
+  GET_INGREDIENTS_REQUEST: false,
+  GET_INGREDIENTS__ERROR: false,
+  GET_INGREDIENTS_SUCCESS: false,
 };
 
 export const ingredientsReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(getIngredientsRequest, (state) => {
-      state.itemsRequest = true;
+      state.GET_INGREDIENTS_REQUEST = true;
     })
-    .addCase(getIngredientsFailed, (state) => {
-      state.itemsFailed = true;
-      state.itemsRequest = false;
+    .addCase(getIngredientsError, () => {
+      return { ...initialState, GET_INGREDIENTS__ERROR: true };
     })
     .addCase(getIngredientsSuccess, (state, action) => {
-      state.itemsRequest = false;
-      state.itemsFailed = false;
+      state.GET_INGREDIENTS_REQUEST = false;
+      state.GET_INGREDIENTS__ERROR = false;
+      state.GET_INGREDIENTS_SUCCESS = true;
       state.items = action.payload;
     })
     .addDefaultCase((state) => state);

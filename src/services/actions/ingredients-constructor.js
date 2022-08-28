@@ -1,16 +1,13 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const insertIngredient = createAction(
-  "ingredients-constructor/insertIngredient",
-  (item) => {
-    return {
-      payload: item,
-    };
-  }
-);
+export const insertIngredient = createAction("INSERT_INGREDIENT", (item) => {
+  return {
+    payload: item,
+  };
+});
 
 export const removeIngredient = createAction(
-  "ingredients-constructor/removeIngredient",
+  "REMOVE_INGREDIENT",
   (item, itemIndex) => {
     return {
       payload: { ingredient: item, itemIndex },
@@ -19,7 +16,7 @@ export const removeIngredient = createAction(
 );
 
 export const updateIngredientsSorting = createAction(
-  "ingredients-constructor/updateIngredientsSorting",
+  "UPDATE_INGREDIENTS_SORTING",
   (draggedIngredient, targetIngredientIndex) => {
     return {
       payload: {

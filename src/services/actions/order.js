@@ -1,11 +1,13 @@
 import { createAction } from "@reduxjs/toolkit";
 import { checkResponse } from "../../utils/api";
 
-export const createOrderRequest = createAction("order/createOrderRequest");
+export const createOrderRequest = createAction("CREATE_ORDER_REQUEST");
 
-export const createOrderFailed = createAction("order/createOrderFailed");
+export const createOrderError = createAction("CREATE_ORDER_ERROR");
 
-export const createOrderSuccess = createAction("order/createOrderSuccess");
+export const createOrderSuccess = createAction("CREATE_ORDER_SUCCESS");
+
+export const clearOrderState = createAction("CLEAR_ORDER_STATE");
 
 export const createOrder = (itemsIds) => {
   return async (dispatch) => {
@@ -20,7 +22,7 @@ export const createOrder = (itemsIds) => {
     })
       .then(checkResponse)
       .then((res) => {
-        if (res.success) {
+        if (res?.success) {
           return dispatch(createOrderSuccess(res.order));
         }
 
@@ -29,7 +31,7 @@ export const createOrder = (itemsIds) => {
       .catch((error) => {
         console.error("Ошибка при создании заказа:", error?.message || error);
 
-        dispatch(createOrderFailed());
+        dispatch(createOrderError());
       });
   };
 };
