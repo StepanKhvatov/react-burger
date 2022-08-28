@@ -1,4 +1,4 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createReducer, nanoid } from "@reduxjs/toolkit";
 import {
   insertIngredient,
   removeIngredient,
@@ -23,7 +23,10 @@ export const ingredientsConstructorReducer = createReducer(
           return;
         }
 
-        state.unblockedItems = [...state.unblockedItems, action.payload];
+        state.unblockedItems = [
+          ...state.unblockedItems,
+          { ...action.payload, key: nanoid() },
+        ];
       })
       .addCase(removeIngredient, (state, action) => {
         const { ingredient, itemIndex } = action.payload;

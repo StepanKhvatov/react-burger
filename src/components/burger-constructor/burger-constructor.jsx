@@ -57,7 +57,7 @@ const BurgerConstructor = () => {
           {unblockedItems.map((item, index) => {
             return (
               <DraggableConstructorElement
-                key={`${item._id}-${index}`}
+                key={item.key}
                 ingredient={item}
                 itemIndex={index}
               />
