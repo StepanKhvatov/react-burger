@@ -7,27 +7,65 @@ import burgerIngredientCardStyles from "./burger-ingredient-card.module.css";
 import { ingredientPropTypes } from "../../utils/types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setViewedIngredient,
+  removeViewedIngredient,
+} from "../../services/actions/viewed-ingredient";
+import { useDrag } from "react-dnd";
+import { selectIngredientQuantity } from "../../services/selectors/ingredients-constructor";
 
 const BurgerIngredientCard = ({ ingredient }) => {
+  const dispatch = useDispatch();
+
+  const ingredientQuantity = useSelector((store) =>
+    selectIngredientQuantity(store, ingredient)
+  );
+
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredients",
+    item: ingredient,
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
+
   const [isOpenInrgedientModal, setOpenIngredientModal] = useState(false);
 
   const { name, price, image } = ingredient;
 
+  const handleSetViewedIngredient = () => {
+    setOpenIngredientModal(true);
+
+    dispatch(setViewedIngredient(ingredient));
+  };
+
+  const handleRemoveViewedIngredient = () => {
+    setOpenIngredientModal(false);
+
+    dispatch(removeViewedIngredient());
+  };
+
   const onKeydownSelect = (event) => {
     if (event.key === "Enter") {
-      setOpenIngredientModal(true);
+      handleSetViewedIngredient();
     }
   };
 
   return (
     <>
       <li
+        ref={dragRef}
         tabIndex={0}
+        style={{ opacity: isDrag ? "0.6" : 1 }}
         onKeyDown={onKeydownSelect}
-        onClick={() => setOpenIngredientModal(true)}
+        onClick={handleSetViewedIngredient}
         className={`${burgerIngredientCardStyles.card} m-3`}
       >
-        <Counter count={1} size="default" />
+        {!!ingredientQuantity && (
+          <Counter count={ingredientQuantity} size="default" />
+        )}
+
         <img
           alt={name}
           className={burgerIngredientCardStyles.image}
@@ -48,10 +86,10 @@ const BurgerIngredientCard = ({ ingredient }) => {
       {isOpenInrgedientModal && (
         <Modal
           isOpen={isOpenInrgedientModal}
-          onClose={() => setOpenIngredientModal(false)}
+          onClose={handleRemoveViewedIngredient}
           title="Детали ингредиента"
         >
-          <IngredientDetails ingredient={ingredient}></IngredientDetails>
+          <IngredientDetails />
         </Modal>
       )}
     </>

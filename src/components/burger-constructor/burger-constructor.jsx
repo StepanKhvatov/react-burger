@@ -1,73 +1,39 @@
-import { useContext, useReducer, useEffect } from "react";
-import {
-  DragIcon,
-  ConstructorElement,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector, useDispatch } from "react-redux";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 import BurgerConstructorFooter from "../burger-constructor-footer/burger-constructor-footer";
-import { IngredientsContext } from "../../services/ingredientsContext";
 import burgerConstructorStyles from "./burger-constructor.module.css";
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "set":
-      const ingredients = action.payload;
-
-      const sortedIngredients = ingredients.reduce(
-        (acc, item) => {
-          const key = item.type === "bun" ? "blocked" : "unblocked";
-
-          return {
-            ...acc,
-            [key]: [...acc[key], item],
-          };
-        },
-        { blocked: [], unblocked: [] }
-      );
-
-      const unblockedIngredients = sortedIngredients.unblocked;
-
-      const [bun] = sortedIngredients.blocked;
-
-      const total =
-        bun.price * 2 +
-        unblockedIngredients.reduce((acc, item) => {
-          return acc + item.price;
-        }, 0);
-
-      return {
-        ...state,
-        bun: bun,
-        unblocked: unblockedIngredients,
-        total: total,
-      };
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-};
-
-const initialState = {
-  bun: null,
-  unblocked: [],
-  total: 0,
-};
+import { useDrop } from "react-dnd";
+import { insertIngredient } from "../../services/actions/ingredients-constructor";
+import DraggableConstructorElement from "../draggable-constructor-element/draggable-constructor-element";
+import { selectConstructorIngredients } from "../../services/selectors/ingredients-constructor";
 
 const BurgerConstructor = () => {
-  const ingredients = useContext(IngredientsContext);
+  const dispatch = useDispatch();
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [{ isHover }, dropRef] = useDrop({
+    accept: "ingredients",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(ingredient) {
+      dispatch(insertIngredient(ingredient));
+    },
+  });
 
-  useEffect(() => {
-    if (ingredients.length) {
-      dispatch({ type: "set", payload: ingredients });
-    }
-  }, [ingredients]);
-
-  const blockedBun = state.bun;
+  const { blockedItem, unblockedItems } = useSelector(
+    selectConstructorIngredients
+  );
 
   return (
-    <div className={burgerConstructorStyles["ingredients-container"]}>
-      {blockedBun && (
+    <div
+      ref={dropRef}
+      style={{
+        border: isHover ? "1px solid #4C4CFF" : "1px solid transparent",
+      }}
+      className={burgerConstructorStyles["ingredients-container"]}
+    >
+      {blockedItem && (
         <div
           className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
         >
@@ -77,38 +43,29 @@ const BurgerConstructor = () => {
             <ConstructorElement
               isLocked
               type="top"
-              text={`${blockedBun.name} (верх)`}
-              price={blockedBun.price}
-              thumbnail={blockedBun.image}
+              text={`${blockedItem.name} (верх)`}
+              price={blockedItem.price}
+              thumbnail={blockedItem.image}
             />
           </div>
         </div>
       )}
-      <div
-        className={`${burgerConstructorStyles["scroll-container"]} ${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-6`}
-      >
-        {state.unblocked.map((item) => {
-          return (
-            <div
-              key={item._id}
-              className={
-                burgerConstructorStyles["constructor-element-container"]
-              }
-            >
-              <button aria-label="druggable-button" type="button">
-                <DragIcon />
-              </button>
-              <ConstructorElement
-                isLocked={false}
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
+      {!!unblockedItems.length && (
+        <ul
+          className={`${burgerConstructorStyles["scroll-container"]} ${burgerConstructorStyles["ingredients-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-6`}
+        >
+          {unblockedItems.map((item, index) => {
+            return (
+              <DraggableConstructorElement
+                key={item.key}
+                ingredient={item}
+                itemIndex={index}
               />
-            </div>
-          );
-        })}
-      </div>
-      {blockedBun && (
+            );
+          })}
+        </ul>
+      )}
+      {blockedItem && (
         <div
           className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
         >
@@ -118,14 +75,21 @@ const BurgerConstructor = () => {
             <ConstructorElement
               isLocked
               type="bottom"
-              text={`${blockedBun.name} (низ)`}
-              price={blockedBun.price}
-              thumbnail={blockedBun.image}
+              text={`${blockedItem.name} (низ)`}
+              price={blockedItem.price}
+              thumbnail={blockedItem.image}
             />
           </div>
         </div>
       )}
-      <BurgerConstructorFooter state={state} />
+      {!blockedItem && !unblockedItems.length && (
+        <div className={burgerConstructorStyles["placeholder-container"]}>
+          <h3 className="text text_type_main-medium">
+            Нет добавленных ингредиентов для заказа
+          </h3>
+        </div>
+      )}
+      <BurgerConstructorFooter />
     </div>
   );
 };

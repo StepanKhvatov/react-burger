@@ -11,6 +11,10 @@
   margin-top: 0;
 }
 
+.tab {
+  pointer-events: none;
+}
+
 .ingredients-container {
   display: grid;
   grid-template-columns: repeat(2, 50%);

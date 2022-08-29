@@ -1,11 +1,14 @@
-import PropTypes from "prop-types";
 import doneImage from "../../images/done.png";
+import { useSelector } from "react-redux";
 import orderDetailsStyles from "./order-details.module.css";
+import { selectOrder } from "../../services/selectors/order";
 
-const OrderDetails = ({ orderId }) => {
+const OrderDetails = () => {
+  const { number } = useSelector(selectOrder);
+
   return (
     <div className={`${orderDetailsStyles.container} pt-15 pb-15`}>
-      <span className="text text_type_digits-large mb-8">{orderId}</span>
+      <span className="text text_type_digits-large mb-8">{number}</span>
       <h4 className="text text_type_main-medium">идентификатор заказа</h4>
       <img
         alt="done-icon"
@@ -22,10 +25,6 @@ const OrderDetails = ({ orderId }) => {
       </div>
     </div>
   );
-};
-
-OrderDetails.propTypes = {
-  orderId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default OrderDetails;

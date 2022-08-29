@@ -28,6 +28,15 @@
 .cunstructor-footer {
   display: flex;
   align-items: center;
+  margin-top: auto;
+}
+
+.placeholder-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 500px;
 }
 
 .scroll-container {
@@ -38,4 +47,12 @@
 .blocked-ingredient-container {
   grid-column-start: 2;
   grid-column-end: 3;
+}
+
+.constructor-element-draggeble-button {
+  cursor: grab;
+}
+
+.constructor-element-draggeble-button:active {
+  cursor: grabbing;
 }

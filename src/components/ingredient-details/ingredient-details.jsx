@@ -1,9 +1,11 @@
-import { ingredientPropTypes } from "../../utils/types";
+import { useSelector } from "react-redux";
+import { selectViewedIngredient } from "../../services/selectors/viewed-ingredient";
 import ingredientDetailsStyles from "./ingredient-details.module.css";
 import InfoColumn from "../info-column/info-column";
 
-const IngredientDetails = ({ ingredient }) => {
-  const { image_large, name, calories, fat, proteins, carbohydrates } = ingredient;
+const IngredientDetails = () => {
+  const { image_large, name, calories, fat, proteins, carbohydrates } =
+    useSelector(selectViewedIngredient);
 
   return (
     <div className={ingredientDetailsStyles.container}>
@@ -24,7 +26,3 @@ const IngredientDetails = ({ ingredient }) => {
 };
 
 export default IngredientDetails;
-
-IngredientDetails.propTypes = {
-  ingredient: ingredientPropTypes.isRequired,
-};

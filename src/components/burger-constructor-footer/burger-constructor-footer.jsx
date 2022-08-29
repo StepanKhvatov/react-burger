@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import {
   CurrencyIcon,
   Button,
@@ -6,59 +6,57 @@ import {
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import burgerConstructorStyles from "../burger-constructor/burger-constructor.module.css";
-import { OrdersContext } from "../../services/ordersContext";
-import { checkResponse } from "../../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder, clearOrderState } from "../../services/actions/order";
+import {
+  selectIngredientsTotal,
+  selectOrderIngredientsIds,
+} from "../../services/selectors/ingredients-constructor";
 
-const BurgerConstructorFooter = ({ state }) => {
-  const [orders, setOrders] = useContext(OrdersContext);
+const BurgerConstructorFooter = () => {
+  const dispatch = useDispatch();
+
+  const total = useSelector(selectIngredientsTotal);
+
+  const orderIngredientsIds = useSelector(selectOrderIngredientsIds);
 
   const [isOrderModalOpen, setOrderModalOpen] = useState(false);
 
   const onSumbit = () => {
-    const bunId = state.bun._id;
+    dispatch(createOrder(orderIngredientsIds)).then((res) => {
+      if (res?.payload?.number) {
+        setOrderModalOpen(true);
+      }
 
-    const mainIngredientsIds = state.unblocked.map((item) => item._id);
-
-    const ingredientsIds = [...mainIngredientsIds, bunId, bunId];
-
-    fetch(`${process.env.REACT_APP_API_URL}/api/orders`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ ingredients: ingredientsIds }),
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res.success) {
-          setOrders([res.order, ...orders]);
-          setOrderModalOpen(true);
-        }
-
-        return res;
-      })
-      .catch((error) => {
-        console.error("Ошибка при создании заказа:", error?.message || error);
-      });
+      return res;
+    });
   };
 
   return (
-    <div className={`${burgerConstructorStyles["cunstructor-footer"]} mt-10`}>
+    <div className={`${burgerConstructorStyles["cunstructor-footer"]}`}>
       <div
         className={`${burgerConstructorStyles["total-price-container"]} mr-10`}
       >
-        <span className="text text_type_digits-medium">{state.total}</span>
+        <span className="text text_type_digits-medium">{total}</span>
         <CurrencyIcon width={50} type="primary" />
       </div>
-      <Button type="primary" size="large" onClick={onSumbit}>
+      <Button
+        disabled={!orderIngredientsIds.length}
+        type="primary"
+        size="large"
+        onClick={onSumbit}
+      >
         Оформить заказ
       </Button>
-      {isOrderModalOpen && orders[0].number && (
+      {isOrderModalOpen && (
         <Modal
           isOpen={isOrderModalOpen}
-          onClose={() => setOrderModalOpen(false)}
+          onClose={() => {
+            setOrderModalOpen(false);
+            dispatch(clearOrderState());
+          }}
         >
-          <OrderDetails orderId={orders[0].number} />
+          <OrderDetails />
         </Modal>
       )}
     </div>
