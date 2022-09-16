@@ -41,8 +41,8 @@ const LoginPage = () => {
         />
         <Button htmlType="submit">Войти</Button>
       </form>
-      <div className="mt-20 flex flex-col align-center">
-        <div className="flex align-center">
+      <div className="mt-20 flex flex-col items-center">
+        <div className="flex items-center">
           <p className="text_type_main-default text_color_inactive mr-3">
             Вы — новый пользователь?
           </p>
@@ -50,7 +50,7 @@ const LoginPage = () => {
             Зарегистрироваться
           </Link>
         </div>
-        <div className="flex align-center">
+        <div className="flex items-center">
           <p className="text_type_main-default text_color_inactive mr-3">
             Забыли пароль?
           </p>

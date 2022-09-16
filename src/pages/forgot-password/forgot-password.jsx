@@ -30,7 +30,7 @@ const ForgotPasswordPage = () => {
         />
         <Button htmlType="submit">Восстановить</Button>
       </form>
-      <div className="mt-20 flex align-center">
+      <div className="mt-20 flex items-center">
         <p className="text_type_main-default text_color_inactive mr-3">
           Вспомнили пароль?
         </p>
