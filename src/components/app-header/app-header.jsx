@@ -19,7 +19,7 @@ const AppHeader = () => {
         </div>
         <NavigationLink
           title="Личный кабинет"
-          to="/"
+          to="/profile"
           icon="profile"
           classes={appHeaderStyles["profile-link"]}
         />

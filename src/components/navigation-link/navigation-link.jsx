@@ -19,18 +19,12 @@ const NavigationLink = ({ icon = "burger", title, to = "/", classes = "" }) => {
   return (
     <NavLink
       to={to}
-      className={({ isActive }) =>
-        `${navigationLinkStyles.link} text text_type_main-default ${classes} ${
-          isActive ? "" : "text_color_inactive"
-        }`
-      }
+      className={`${navigationLinkStyles.link} text text_type_main-default text_color_inactive ${classes}`}
     >
-      {({ isActive }) => (
-        <>
-          <Icon type={isActive ? "primary" : "secondary"} />
-          {title}
-        </>
-      )}
+      <>
+        <Icon type={"secondary"} />
+        {title}
+      </>
     </NavLink>
   );
 };
