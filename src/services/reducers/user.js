@@ -6,6 +6,9 @@ import {
   loginRequest,
   loginError,
   loginSuccess,
+  forgotPasswordRequest,
+  forgotPasswordError,
+  forgotPasswordSuccess,
 } from "../actions/user";
 
 const initialState = {
@@ -17,6 +20,9 @@ const initialState = {
   LOGIN_REQUEST: false,
   LOGIN__ERROR: false,
   LOGIN_SUCCESS: false,
+  FORGOT_PASSWORD_REQUEST: false,
+  FORGOT_PASSWORD__ERROR: false,
+  FORGOT_PASSWORD_SUCCESS: false,
 };
 
 export const userReducer = createReducer(initialState, (builder) => {
@@ -56,6 +62,19 @@ export const userReducer = createReducer(initialState, (builder) => {
 
       state.accessToken = accessToken;
       state.data = user;
+    })
+    .addCase(forgotPasswordRequest, (state) => {
+      state.FORGOT_PASSWORD_REQUEST = true;
+      state.FORGOT_PASSWORD__ERROR = false;
+    })
+    .addCase(forgotPasswordError, (state) => {
+      state.FORGOT_PASSWORD_REQUEST = false;
+      state.FORGOT_PASSWORD__ERROR = true;
+      state.FORGOT_PASSWORD_SUCCESS = false;
+    })
+    .addCase(forgotPasswordSuccess, (state) => {
+      state.FORGOT_PASSWORD_REQUEST = false;
+      state.FORGOT_PASSWORD_SUCCESS = true;
     })
     .addDefaultCase((state) => state);
 });
