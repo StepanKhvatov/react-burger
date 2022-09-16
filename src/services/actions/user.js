@@ -19,6 +19,12 @@ export const forgotPasswordError = createAction("FORGOT_PASSWORD_ERROR");
 
 export const forgotPasswordSuccess = createAction("FORGOT_PASSWORD_SUCCESS");
 
+export const resetPasswordRequest = createAction("RESET_PASSWORD_REQUEST");
+
+export const resetPasswordError = createAction("RESET_PASSWORD_ERROR");
+
+export const resetPasswordSuccess = createAction("RESET_PASSWORD_SUCCESS");
+
 export const register = (form) => {
   return async (dispatch) => {
     dispatch(registerRequest());
@@ -99,6 +105,36 @@ export const forgotPassword = (form) => {
         );
 
         dispatch(forgotPasswordError());
+      });
+  };
+};
+
+export const resetPassword = (form) => {
+  return async (dispatch) => {
+    dispatch(resetPasswordRequest());
+
+    return fetch(`${process.env.REACT_APP_API_URL}/api/password-reset/reset`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(form),
+    })
+      .then(checkResponse)
+      .then((res) => {
+        if (res?.success) {
+          return dispatch(resetPasswordSuccess(res));
+        }
+
+        return res;
+      })
+      .catch((error) => {
+        console.error(
+          "Ошибка при восстановлении пароля:",
+          error?.message || error
+        );
+
+        dispatch(resetPasswordError());
       });
   };
 };
