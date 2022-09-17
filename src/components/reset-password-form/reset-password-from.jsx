@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Input,
   Button,
@@ -8,6 +9,8 @@ import PasswordInput from "../password-input/password-input";
 import { resetPassword } from "../../services/actions/user";
 
 const ResetPasswordForm = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   const [form, setValue] = useState({ password: "", token: "" });
@@ -19,7 +22,11 @@ const ResetPasswordForm = () => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    dispatch(resetPassword(form));
+    dispatch(resetPassword(form)).then((res) => {
+      if (res?.payload?.success) {
+        history.replace({ pathanme: "/login" });
+      }
+    });
   };
 
   return (

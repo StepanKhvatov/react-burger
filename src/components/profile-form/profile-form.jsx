@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Input,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { updateProfile } from "../../services/actions/user";
 import { selectUser } from "../../services/selectors/user";
+import EditInput from "../edit-input/edit-input";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
@@ -15,15 +13,10 @@ const ProfileForm = () => {
   const [form, setValue] = useState({
     name: user.name,
     email: user.email,
-    password: "",
+    password: "******",
   });
-  const [formChanged, setFormChanged] = useState(false);
 
   const onChange = (e) => {
-    if (!formChanged) {
-      setFormChanged(true);
-    }
-
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -34,12 +27,14 @@ const ProfileForm = () => {
   };
 
   const onReset = () => {
-    setFormChanged(false);
+    setValue({ ...form, email: user.email, name: user.name });
   };
+
+  const isFormCaanged = user.name !== form.name || user.email !== form.email;
 
   return (
     <form onSubmit={onSubmit} className="form-container">
-      <Input
+      <EditInput
         value={form.name}
         onChange={onChange}
         type="text"
@@ -47,10 +42,8 @@ const ProfileForm = () => {
         name="name"
         error={false}
         errorText="Ошибка"
-        size="default"
-        icon="EditIcon"
       />
-      <Input
+      <EditInput
         value={form.email}
         onChange={onChange}
         type="email"
@@ -58,10 +51,8 @@ const ProfileForm = () => {
         name="email"
         error={false}
         errorText="Ошибка"
-        size="default"
-        icon="EditIcon"
       />
-      <Input
+      <EditInput
         value={form.password}
         onChange={onChange}
         type="text"
@@ -69,10 +60,9 @@ const ProfileForm = () => {
         name="password"
         error={false}
         errorText="Ошибка"
-        size="default"
-        icon="EditIcon"
+        disableEdit
       />
-      {formChanged && (
+      {isFormCaanged && (
         <div className="flex justify-end w-full items-center">
           <button
             onClick={onReset}
