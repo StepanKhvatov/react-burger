@@ -63,6 +63,10 @@ ul {
   align-items: center;
 }
 
+.container_location-auth {
+  margin-top: 150px;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;

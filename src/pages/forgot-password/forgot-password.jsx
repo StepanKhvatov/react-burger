@@ -17,7 +17,7 @@ const ForgotPasswordPage = () => {
   }
 
   return (
-    <section className="container pt-10 pb-10 pr-5 pl-5">
+    <section className="container container_location-auth pt-10 pb-10 pr-5 pl-5">
       <h4 className="text text_type_main-medium mb-6">Восстановление пароля</h4>
       <ForgotPasswordForm />
       <div className="mt-20 flex items-center">
