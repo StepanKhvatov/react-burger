@@ -1,19 +1,8 @@
-import { useState } from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
-import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import ProfileForm from "../../components/profile-form/profile-form";
 import profilePageStyles from "./profile.module.css";
 
 const ProfilePage = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-
-    const { name, email, password } = event.target;
-  };
-
   const handleLogout = () => {};
 
   return (
@@ -29,7 +18,7 @@ const ProfilePage = () => {
             Профиль
           </NavLink>
           <NavLink
-            to="/orders"
+            to="/profile/orders"
             className="text text_type_main-medium text_color_inactive"
           >
             История заказов
@@ -47,45 +36,12 @@ const ProfilePage = () => {
             В этом разделе вы можете изменить свои персональные данные
           </p>
         </div>
-        <form onSubmit={onSubmit} className="form-container">
-          <Input
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            type="text"
-            placeholder="Имя"
-            name="name"
-            error={false}
-            errorText="Ошибка"
-            size="default"
-            icon="EditIcon"
-          />
-          <Input
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            type="text"
-            placeholder="Логин"
-            name="email"
-            error={false}
-            errorText="Ошибка"
-            size="default"
-            icon="EditIcon"
-          />
-          <Input
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            type="text"
-            placeholder="Пароль"
-            name="password"
-            error={false}
-            errorText="Ошибка"
-            size="default"
-            icon="EditIcon"
-          />
-        </form>
+        <Switch>
+          <Route path="/profile" exact>
+            <ProfileForm />
+          </Route>
+        </Switch>
       </div>
-      <Switch>
-        <Route path="/profile" exact></Route>
-      </Switch>
     </section>
   );
 };

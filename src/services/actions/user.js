@@ -25,6 +25,12 @@ export const resetPasswordError = createAction("RESET_PASSWORD_ERROR");
 
 export const resetPasswordSuccess = createAction("RESET_PASSWORD_SUCCESS");
 
+export const updateProfileRequest = createAction("UPDATE_PROFILE_REQUEST");
+
+export const updateProfileError = createAction("UPDATE_PROFILE_ERROR");
+
+export const updateProfileSuccess = createAction("UPDATE_PROFILE_SUCCESS");
+
 export const register = (form) => {
   return async (dispatch) => {
     dispatch(registerRequest());
@@ -135,6 +141,38 @@ export const resetPassword = (form) => {
         );
 
         dispatch(resetPasswordError());
+      });
+  };
+};
+
+// Auth request
+
+export const updateProfile = (form) => {
+  return async (dispatch) => {
+    dispatch(updateProfileRequest());
+
+    return fetch(`${process.env.REACT_APP_API_URL}/api/auth/user`, {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(form),
+    })
+      .then(checkResponse)
+      .then((res) => {
+        if (res?.success) {
+          return dispatch(updateProfileSuccess(res));
+        }
+
+        return res;
+      })
+      .catch((error) => {
+        console.error(
+          "Ошибка при изменении информации пользователя:",
+          error?.message || error
+        );
+
+        dispatch(updateProfileError());
       });
   };
 };
