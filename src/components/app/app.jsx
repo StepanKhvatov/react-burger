@@ -1,5 +1,6 @@
-import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Switch, Route } from "react-router-dom";
 import { getUser } from "../../services/actions/user";
 import { getIngredients } from "../../services/actions/ingredients";
 import appStyles from "./app.module.css";
@@ -11,7 +12,8 @@ import ForgotPasswordPage from "../../pages/forgot-password/forgot-password";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
 import IngredientPage from "../../pages/ingredient/ingredient-page";
-import { Switch, Route } from "react-router-dom";
+import NotFountPage from "../../pages/not-found/not-found";
+
 import ProtectedRoute from "../protected-route/protected-route";
 
 const App = () => {
@@ -58,6 +60,9 @@ const App = () => {
         <ProtectedRoute path="/profile" exact={false}>
           <ProfilePage />
         </ProtectedRoute>
+        <Route path="*">
+          <NotFountPage />
+        </Route>
       </Switch>
     </div>
   );
