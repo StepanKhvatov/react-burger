@@ -1,6 +1,7 @@
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ProfileForm from "../../components/profile-form/profile-form";
+import NavigationLink from "../../components/navigation-link/navigation-link";
 import profilePageStyles from "./profile.module.css";
 import { logout } from "../../services/actions/user";
 
@@ -17,18 +18,18 @@ const ProfilePage = () => {
         <div
           className={`${profilePageStyles.navigation} flex flex-col items-start`}
         >
-          <NavLink
+          <NavigationLink
+            exact
             to="/profile"
-            className="text text_type_main-medium text_color_inactive"
-          >
-            Профиль
-          </NavLink>
-          <NavLink
+            title="Профиль"
+            classes="text_type_main-medium"
+          />
+          <NavigationLink
+            exact
             to="/profile/orders"
-            className="text text_type_main-medium text_color_inactive"
-          >
-            История заказов
-          </NavLink>
+            title="История заказов"
+            classes="text_type_main-medium"
+          />
           <button
             onClick={handleLogout}
             type="button"

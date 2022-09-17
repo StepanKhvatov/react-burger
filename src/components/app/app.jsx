@@ -55,7 +55,7 @@ const App = () => {
         <Route path="/reset-password">
           <ResetPasswordPage />
         </Route>
-        <ProtectedRoute path="/profile" exact>
+        <ProtectedRoute path="/profile" exact={false}>
           <ProfilePage />
         </ProtectedRoute>
       </Switch>
