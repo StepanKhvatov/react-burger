@@ -31,6 +31,12 @@ export const updateProfileError = createAction("UPDATE_PROFILE_ERROR");
 
 export const updateProfileSuccess = createAction("UPDATE_PROFILE_SUCCESS");
 
+export const getUserRequest = createAction("GET_USER_REQUEST");
+
+export const getUserError = createAction("GET_USER_ERROR");
+
+export const getUserSuccess = createAction("GET_USER_SUCCESS");
+
 export const register = (form) => {
   return async (dispatch) => {
     dispatch(registerRequest());
@@ -58,6 +64,7 @@ export const login = (form) => {
       endpoint: "auth/login",
       body: form,
       onSuccess: (res) => {
+        setCookie("token", res.accessToken);
         setCookie("refresh_token", res.refreshToken);
 
         dispatch(loginSuccess(res));
@@ -105,6 +112,22 @@ export const updateProfile = (form) => {
       body: form,
       onSuccess: (res) => dispatch(updateProfileSuccess(res)),
       onError: () => dispatch(updateProfileError()),
+    });
+  };
+};
+
+export const getUser = () => {
+  return async (dispatch) => {
+    dispatch(getUserRequest());
+
+    return fetchApi({
+      method: "PATCH",
+      endpoint: "auth/user",
+      withAuth: true,
+      onSuccess: (res) => {
+        dispatch(getUserSuccess(res));
+      },
+      onError: () => dispatch(getUserError()),
     });
   };
 };

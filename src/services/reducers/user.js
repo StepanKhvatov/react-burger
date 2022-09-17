@@ -15,6 +15,9 @@ import {
   updateProfileRequest,
   updateProfileError,
   updateProfileSuccess,
+  getUserRequest,
+  getUserError,
+  getUserSuccess,
 } from "../actions/user";
 
 const initialState = {
@@ -35,6 +38,9 @@ const initialState = {
   UPDATE_PROFILE_REQUEST: false,
   UPDATE_PROFILE_ERROR: false,
   UPDATE_PROFILE_SUCCESS: false,
+  GET_USER_REQUEST: false,
+  GET_USER_ERROR: false,
+  GET_USER_SUCCESS: false,
 };
 
 export const userReducer = createReducer(initialState, (builder) => {
@@ -115,6 +121,23 @@ export const userReducer = createReducer(initialState, (builder) => {
 
       state.UPDATE_PROFILE_REQUEST = false;
       state.UPDATE_PROFILE_SUCCESS = true;
+
+      state.data = user;
+    })
+    .addCase(getUserRequest, (state) => {
+      state.GET_USER_REQUEST = true;
+      state.GET_USER_ERROR = false;
+    })
+    .addCase(getUserError, (state) => {
+      state.GET_USER_REQUEST = false;
+      state.GET_USER_ERROR = true;
+      state.GET_USER_SUCCESS = false;
+    })
+    .addCase(getUserSuccess, (state, action) => {
+      const { user } = action.payload;
+
+      state.GET_USER_REQUEST = false;
+      state.GET_USER_SUCCESS = true;
 
       state.data = user;
     })
