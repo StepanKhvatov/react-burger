@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { fetchApi } from "../../utils/api";
+import { fetchApi, setCookie } from "../../utils/api";
 
 export const registerRequest = createAction("REGISTER_REQUEST");
 
@@ -39,7 +39,11 @@ export const register = (form) => {
       method: "POST",
       endpoint: "auth/register",
       body: form,
-      onSuccess: (res) => dispatch(registerSuccess(res)),
+      onSuccess: (res) => {
+        setCookie("refresh_token", res.refreshToken);
+
+        dispatch(registerSuccess(res));
+      },
       onError: () => dispatch(registerError()),
     });
   };
@@ -53,7 +57,11 @@ export const login = (form) => {
       method: "POST",
       endpoint: "auth/login",
       body: form,
-      onSuccess: (res) => dispatch(loginSuccess(res)),
+      onSuccess: (res) => {
+        setCookie("refresh_token", res.refreshToken);
+
+        dispatch(loginSuccess(res));
+      },
       onError: () => dispatch(loginError()),
     });
   };
