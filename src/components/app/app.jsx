@@ -1,3 +1,6 @@
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { getUser } from "../../services/actions/user";
 import appStyles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import ConstructorPage from "../../pages/constuctor/constructor";
@@ -10,6 +13,20 @@ import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../protected-route/protected-route";
 
 const App = () => {
+  const [isUserLoaded, setUserLoaded] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser()).finally(() => {
+      setUserLoaded(true);
+    });
+  }, [dispatch]);
+
+  if (!isUserLoaded) {
+    return null;
+  }
+
   return (
     <div className={appStyles.app}>
       <AppHeader />

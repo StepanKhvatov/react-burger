@@ -1,19 +1,15 @@
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import LoginForm from "../../components/login-form/login-form";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../services/selectors/user";
 
 const LoginPage = () => {
+  const { location } = useHistory();
+
   const user = useSelector(selectUser);
 
   if (user) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/",
-        }}
-      />
-    );
+    return <Redirect to={location.state?.from || "/"} />;
   }
 
   return (
