@@ -21,7 +21,7 @@ import {
 } from "../actions/user";
 
 const initialState = {
-  data: {},
+  data: undefined,
   accessToken: null,
   REGISTER_REQUEST: false,
   REGISTER_ERROR: false,

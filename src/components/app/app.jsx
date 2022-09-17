@@ -7,17 +7,9 @@ import ForgotPasswordPage from "../../pages/forgot-password/forgot-password";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
 import { Switch, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { getUser } from "../../services/actions/user";
+import ProtectedRoute from "../protected-route/protected-route";
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
-
   return (
     <div className={appStyles.app}>
       <AppHeader />
@@ -37,9 +29,9 @@ const App = () => {
         <Route path="/reset-password" exact>
           <ResetPasswordPage />
         </Route>
-        <Route path="/profile">
+        <ProtectedRoute path="/profile" exact>
           <ProfilePage />
-        </Route>
+        </ProtectedRoute>
       </Switch>
     </div>
   );
