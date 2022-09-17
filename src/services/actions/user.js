@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { checkResponse } from "../../utils/api";
+import { fetchApi } from "../../utils/api";
 
 export const registerRequest = createAction("REGISTER_REQUEST");
 
@@ -35,26 +35,13 @@ export const register = (form) => {
   return async (dispatch) => {
     dispatch(registerRequest());
 
-    return fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+    return fetchApi({
       method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res?.success) {
-          return dispatch(registerSuccess(res));
-        }
-
-        return res;
-      })
-      .catch((error) => {
-        console.error("Ошибка при регистрации:", error?.message || error);
-
-        dispatch(registerError());
-      });
+      endpoint: "auth/register",
+      body: form,
+      onSuccess: (res) => dispatch(registerSuccess(res)),
+      onError: () => dispatch(registerError()),
+    });
   };
 };
 
@@ -62,26 +49,13 @@ export const login = (form) => {
   return async (dispatch) => {
     dispatch(loginRequest());
 
-    return fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+    return fetchApi({
       method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res?.success) {
-          return dispatch(loginSuccess(res));
-        }
-
-        return res;
-      })
-      .catch((error) => {
-        console.error("Ошибка при логине:", error?.message || error);
-
-        dispatch(loginError());
-      });
+      endpoint: "auth/login",
+      body: form,
+      onSuccess: (res) => dispatch(loginSuccess(res)),
+      onError: () => dispatch(loginError()),
+    });
   };
 };
 
@@ -89,29 +63,13 @@ export const forgotPassword = (form) => {
   return async (dispatch) => {
     dispatch(forgotPasswordRequest());
 
-    return fetch(`${process.env.REACT_APP_API_URL}/api/password-reset`, {
+    return fetchApi({
       method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res?.success) {
-          return dispatch(forgotPasswordSuccess(res));
-        }
-
-        return res;
-      })
-      .catch((error) => {
-        console.error(
-          "Ошибка при восстановлении пароля:",
-          error?.message || error
-        );
-
-        dispatch(forgotPasswordError());
-      });
+      endpoint: "password-reset",
+      body: form,
+      onSuccess: (res) => dispatch(forgotPasswordSuccess(res)),
+      onError: () => dispatch(forgotPasswordError()),
+    });
   };
 };
 
@@ -119,60 +77,26 @@ export const resetPassword = (form) => {
   return async (dispatch) => {
     dispatch(resetPasswordRequest());
 
-    return fetch(`${process.env.REACT_APP_API_URL}/api/password-reset/reset`, {
+    return fetchApi({
       method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res?.success) {
-          return dispatch(resetPasswordSuccess(res));
-        }
-
-        return res;
-      })
-      .catch((error) => {
-        console.error(
-          "Ошибка при восстановлении пароля:",
-          error?.message || error
-        );
-
-        dispatch(resetPasswordError());
-      });
+      endpoint: "password-reset/reset",
+      body: form,
+      onSuccess: (res) => dispatch(resetPasswordSuccess(res)),
+      onError: () => dispatch(resetPasswordError()),
+    });
   };
 };
-
-// Auth request
 
 export const updateProfile = (form) => {
   return async (dispatch) => {
     dispatch(updateProfileRequest());
 
-    return fetch(`${process.env.REACT_APP_API_URL}/api/auth/user`, {
+    return fetchApi({
       method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res?.success) {
-          return dispatch(updateProfileSuccess(res));
-        }
-
-        return res;
-      })
-      .catch((error) => {
-        console.error(
-          "Ошибка при изменении информации пользователя:",
-          error?.message || error
-        );
-
-        dispatch(updateProfileError());
-      });
+      endpoint: "auth/user",
+      body: form,
+      onSuccess: (res) => dispatch(updateProfileSuccess(res)),
+      onError: () => dispatch(updateProfileError()),
+    });
   };
 };
