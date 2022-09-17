@@ -1,15 +1,22 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { updateProfile } from "../../services/actions/user";
+import { selectUser } from "../../services/selectors/user";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
 
-  const [form, setValue] = useState({ name: "", email: "", password: "" });
+  const user = useSelector(selectUser);
+
+  const [form, setValue] = useState({
+    name: user.name,
+    email: user.email,
+    password: "",
+  });
   const [formChanged, setFormChanged] = useState(false);
 
   const onChange = (e) => {
