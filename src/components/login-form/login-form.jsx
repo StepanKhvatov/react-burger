@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Input,
   Button,
@@ -10,6 +11,8 @@ import { login } from "../../services/actions/user";
 const LoginForm = () => {
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const [form, setValue] = useState({ email: "", password: "" });
 
   const onChange = (e) => {
@@ -19,7 +22,11 @@ const LoginForm = () => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    dispatch(login(form));
+    dispatch(login(form)).then((res) => {
+      if (res.payload.success) {
+        history.replace({ pathname: "/" });
+      }
+    });
   };
 
   return (

@@ -60,7 +60,7 @@ export const register = (form) => {
       onSuccess: (res) => {
         setCookie("refresh_token", res.refreshToken);
 
-        dispatch(registerSuccess(res));
+        return dispatch(registerSuccess(res));
       },
       onError: () => dispatch(registerError()),
     });
@@ -79,7 +79,7 @@ export const login = (form) => {
         setCookie("token", res.accessToken);
         setCookie("refresh_token", res.refreshToken);
 
-        dispatch(loginSuccess(res));
+        return dispatch(loginSuccess(res));
       },
       onError: () => dispatch(loginError()),
     });
