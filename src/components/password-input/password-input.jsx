@@ -1,7 +1,14 @@
-import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
+import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const PasswordInput = ({ value, onChange, errorText, error, name, placeholder }) => {
+const PasswordInput = ({
+  value,
+  onChange,
+  errorText,
+  error,
+  name,
+  placeholder,
+}) => {
   const [type, setType] = useState("password");
 
   const onIconClick = () => {

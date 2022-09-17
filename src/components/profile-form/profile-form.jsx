@@ -54,7 +54,6 @@ const ProfileForm = () => {
       />
       <EditInput
         value={form.password}
-        onChange={onChange}
         type="text"
         placeholder="Пароль"
         name="password"
