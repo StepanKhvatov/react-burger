@@ -1,9 +1,7 @@
 export const checkResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-
-  return Promise.reject(`Ошибка ${res.status}`);
+  return res.ok
+    ? res.json()
+    : res.json().then((error) => Promise.reject(error));
 };
 
 export const setCookie = (name, value, props) => {

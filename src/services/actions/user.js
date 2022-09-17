@@ -25,6 +25,12 @@ export const resetPasswordError = createAction("RESET_PASSWORD_ERROR");
 
 export const resetPasswordSuccess = createAction("RESET_PASSWORD_SUCCESS");
 
+export const refreshTokenRequest = createAction("REFRESH_TOKEN_REQUEST");
+
+export const refreshTokenError = createAction("REFRESH_TOKEN_ERROR");
+
+export const refreshTokenSuccess = createAction("REFRESH_TOKEN_SUCCESS");
+
 export const updateProfileRequest = createAction("UPDATE_PROFILE_REQUEST");
 
 export const updateProfileError = createAction("UPDATE_PROFILE_ERROR");
@@ -108,6 +114,31 @@ export const resetPassword = (form) => {
   };
 };
 
+export const refreshToken = (callback) => {
+  return async (dispatch) => {
+    dispatch(refreshTokenRequest());
+
+    return fetchApi({
+      method: "POST",
+      endpoint: "auth/token",
+      body: {
+        token: getCookie("refresh_token"),
+      },
+      onSuccess: (res) => {
+        setCookie("token", res.accessToken);
+        setCookie("refresh_token", res.refreshToken);
+
+        if (typeof callback === "function") {
+          dispatch(callback());
+        }
+
+        dispatch(refreshTokenSuccess(res));
+      },
+      onError: () => dispatch(refreshTokenError()),
+    });
+  };
+};
+
 export const updateProfile = (form) => {
   return async (dispatch) => {
     dispatch(updateProfileRequest());
@@ -117,7 +148,13 @@ export const updateProfile = (form) => {
       endpoint: "auth/user",
       body: form,
       onSuccess: (res) => dispatch(updateProfileSuccess(res)),
-      onError: () => dispatch(updateProfileError()),
+      onError: (error) => {
+        if (error.message === "jwt expired") {
+          return dispatch(refreshToken(updateProfile));
+        }
+
+        dispatch(updateProfileError());
+      },
     });
   };
 };
@@ -127,13 +164,19 @@ export const getUser = () => {
     dispatch(getUserRequest());
 
     return fetchApi({
-      method: "PATCH",
+      method: "GET",
       endpoint: "auth/user",
       withAuth: true,
       onSuccess: (res) => {
         dispatch(getUserSuccess(res));
       },
-      onError: () => dispatch(getUserError()),
+      onError: (error) => {
+        if (error.message === "jwt expired") {
+          return dispatch(refreshToken(getUser));
+        }
+
+        dispatch(getUserError());
+      },
     });
   };
 };
