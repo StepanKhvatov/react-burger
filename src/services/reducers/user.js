@@ -145,7 +145,6 @@ export const userReducer = createReducer(initialState, (builder) => {
 
       state.data = user;
     })
-
     .addCase(logoutRequest, (state) => {
       state.LOGOUT_REQUEST = true;
       state.LOGOUT_ERROR = false;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   Input,
@@ -7,6 +8,8 @@ import {
 import { forgotPassword } from "../../services/actions/user";
 
 const ForgotPasswordForm = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   const [form, setValue] = useState({ email: "" });
@@ -18,7 +21,14 @@ const ForgotPasswordForm = () => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    dispatch(forgotPassword(form));
+    dispatch(forgotPassword(form)).then((res) => {
+      if (res.payload.success) {
+        history.replace({
+          pathname: "/reset-password",
+          state: { from: history.location },
+        });
+      }
+    });
   };
 
   return (

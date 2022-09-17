@@ -2,8 +2,11 @@ import { Link, Redirect } from "react-router-dom";
 import ResetPasswordForm from "../../components/reset-password-form/reset-password-from";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../services/selectors/user";
+import { selectForgotPasswordRequest } from "../../services/selectors/user";
 
 const ResetPasswordPage = () => {
+  const allowRenderPage = useSelector(selectForgotPasswordRequest);
+
   const user = useSelector(selectUser);
 
   if (user) {
@@ -11,6 +14,16 @@ const ResetPasswordPage = () => {
       <Redirect
         to={{
           pathname: "/",
+        }}
+      />
+    );
+  }
+
+  if (!allowRenderPage) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/forgot-password",
         }}
       />
     );

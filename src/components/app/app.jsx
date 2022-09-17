@@ -52,7 +52,7 @@ const App = () => {
         <Route path="/forgot-password" exact>
           <ForgotPasswordPage />
         </Route>
-        <Route path="/reset-password" exact>
+        <Route path="/reset-password">
           <ResetPasswordPage />
         </Route>
         <ProtectedRoute path="/profile" exact>
