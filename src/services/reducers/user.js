@@ -18,6 +18,9 @@ import {
   getUserRequest,
   getUserError,
   getUserSuccess,
+  logoutRequest,
+  logoutError,
+  logoutSuccess,
 } from "../actions/user";
 
 const initialState = {
@@ -41,6 +44,9 @@ const initialState = {
   GET_USER_REQUEST: false,
   GET_USER_ERROR: false,
   GET_USER_SUCCESS: false,
+  LOGOUT_REQUEST: false,
+  LOGOUT_ERROR: false,
+  LOGOUT_SUCCESS: false,
 };
 
 export const userReducer = createReducer(initialState, (builder) => {
@@ -55,12 +61,11 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.REGISTER_SUCCESS = false;
     })
     .addCase(registerSuccess, (state, action) => {
-      const { accessToken, user } = action.payload;
+      const { user } = action.payload;
 
       state.REGISTER_REQUEST = false;
       state.REGISTER_SUCCESS = true;
 
-      state.accessToken = accessToken;
       state.data = user;
     })
     .addCase(loginRequest, (state) => {
@@ -73,12 +78,11 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.LOGIN_SUCCESS = false;
     })
     .addCase(loginSuccess, (state, action) => {
-      const { accessToken, user } = action.payload;
+      const { user } = action.payload;
 
       state.LOGIN_REQUEST = false;
       state.LOGIN_SUCCESS = true;
 
-      state.accessToken = accessToken;
       state.data = user;
     })
     .addCase(forgotPasswordRequest, (state) => {
@@ -140,6 +144,22 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.GET_USER_SUCCESS = true;
 
       state.data = user;
+    })
+
+    .addCase(logoutRequest, (state) => {
+      state.LOGOUT_REQUEST = true;
+      state.LOGOUT_ERROR = false;
+    })
+    .addCase(logoutError, (state) => {
+      state.LOGOUT_REQUEST = false;
+      state.LOGOUT_ERROR = true;
+      state.LOGOUT_SUCCESS = false;
+    })
+    .addCase(logoutSuccess, (state, action) => {
+      state.LOGOUT_REQUEST = false;
+      state.LOGOUT_SUCCESS = true;
+
+      state.data = undefined;
     })
     .addDefaultCase((state) => state);
 });

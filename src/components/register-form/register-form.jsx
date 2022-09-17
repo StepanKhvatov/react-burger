@@ -4,6 +4,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PasswordInput from "../password-input/password-input";
 import { register } from "../../services/actions/user";
 
 const RegisterForm = () => {
@@ -43,15 +44,13 @@ const RegisterForm = () => {
         errorText="Ошибка"
         size="default"
       />
-      <Input
+      <PasswordInput
         value={form.password}
         onChange={onChange}
-        type="text"
-        placeholder="Пароль"
         name="password"
+        placeholder="Пароль"
         error={false}
         errorText="Ошибка"
-        size="default"
       />
       <Button htmlType="submit">Зарегистрироваться</Button>
     </form>

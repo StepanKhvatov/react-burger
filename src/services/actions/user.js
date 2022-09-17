@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { fetchApi, setCookie } from "../../utils/api";
+import { fetchApi, getCookie, setCookie } from "../../utils/api";
 
 export const registerRequest = createAction("REGISTER_REQUEST");
 
@@ -36,6 +36,12 @@ export const getUserRequest = createAction("GET_USER_REQUEST");
 export const getUserError = createAction("GET_USER_ERROR");
 
 export const getUserSuccess = createAction("GET_USER_SUCCESS");
+
+export const logoutRequest = createAction("LOGOUT_REQUEST");
+
+export const logoutError = createAction("LOGOUT_ERROR");
+
+export const logoutSuccess = createAction("LOGOUT_SUCCESS");
 
 export const register = (form) => {
   return async (dispatch) => {
@@ -128,6 +134,27 @@ export const getUser = () => {
         dispatch(getUserSuccess(res));
       },
       onError: () => dispatch(getUserError()),
+    });
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    dispatch(logoutRequest());
+
+    return fetchApi({
+      method: "POST",
+      endpoint: "auth/logout",
+      body: {
+        token: getCookie("refresh_token"),
+      },
+      onSuccess: (res) => {
+        setCookie("token", undefined);
+        setCookie("refresh_token", undefined);
+
+        dispatch(logoutSuccess(res));
+      },
+      onError: () => dispatch(logoutError()),
     });
   };
 };

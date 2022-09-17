@@ -4,12 +4,13 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PasswordInput from "../password-input/password-input";
 import { resetPassword } from "../../services/actions/user";
 
 const ResetPasswordForm = () => {
   const dispatch = useDispatch();
 
-  const [form, setValue] = useState({ email: "", password: "" });
+  const [form, setValue] = useState({ password: "", token: "" });
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
@@ -23,22 +24,20 @@ const ResetPasswordForm = () => {
 
   return (
     <form className="form-container" onSubmit={onSubmit}>
-      <Input
-        value={form.email}
+      <PasswordInput
+        value={form.password}
         onChange={onChange}
-        type="text"
         placeholder="Введите новый пароль"
         name="password"
         error={false}
         errorText="Ошибка"
-        size="default"
       />
       <Input
-        value={form.password}
+        value={form.token}
         onChange={onChange}
         type="text"
         placeholder="Введите код из письма"
-        name="code"
+        name="token"
         error={false}
         errorText="Ошибка"
         size="default"

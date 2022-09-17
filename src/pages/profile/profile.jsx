@@ -1,9 +1,15 @@
 import { Switch, Route, NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import ProfileForm from "../../components/profile-form/profile-form";
 import profilePageStyles from "./profile.module.css";
+import { logout } from "../../services/actions/user";
 
 const ProfilePage = () => {
-  const handleLogout = () => {};
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <section className="container pt-10 pb-10 pr-5 pl-5">
