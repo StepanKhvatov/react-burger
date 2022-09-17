@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   CurrencyIcon,
   Button,
@@ -12,9 +13,14 @@ import {
   selectIngredientsTotal,
   selectOrderIngredientsIds,
 } from "../../services/selectors/ingredients-constructor";
+import { selectUser } from "../../services/selectors/user";
 
 const BurgerConstructorFooter = () => {
+  const history = useHistory();
+
   const dispatch = useDispatch();
+
+  const user = useSelector(selectUser);
 
   const total = useSelector(selectIngredientsTotal);
 
@@ -23,13 +29,17 @@ const BurgerConstructorFooter = () => {
   const [isOrderModalOpen, setOrderModalOpen] = useState(false);
 
   const onSumbit = () => {
-    dispatch(createOrder(orderIngredientsIds)).then((res) => {
-      if (res?.payload?.number) {
-        setOrderModalOpen(true);
-      }
+    if (user) {
+      return dispatch(createOrder(orderIngredientsIds)).then((res) => {
+        if (res?.payload?.number) {
+          setOrderModalOpen(true);
+        }
 
-      return res;
-    });
+        return res;
+      });
+    }
+
+    history.replace({ pathname: "/login", state: { from: history.location } });
   };
 
   return (
