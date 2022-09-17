@@ -10,3 +10,12 @@ export const setViewedIngredient = createAction(
 );
 
 export const removeViewedIngredient = createAction("REMOVE_VIEWED_INGREDIENT");
+
+export const setViewedIngredientComponent = createAction(
+  "SET_VIEWED_INGREDIENT_COMPONENT",
+  (item) => {
+    return {
+      payload: item,
+    };
+  }
+);

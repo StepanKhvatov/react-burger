@@ -8,7 +8,6 @@ const ConstructorPage = () => {
   return (
     <section className="container pt-10 pb-10 pr-5 pl-5">
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-
       <main className={constructorPageStyles["content-container"]}>
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />

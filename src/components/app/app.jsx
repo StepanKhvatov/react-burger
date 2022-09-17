@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getUser } from "../../services/actions/user";
+import { getIngredients } from "../../services/actions/ingredients";
 import appStyles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import ConstructorPage from "../../pages/constuctor/constructor";
@@ -9,6 +10,7 @@ import RegisterPage from "../../pages/register/register";
 import ForgotPasswordPage from "../../pages/forgot-password/forgot-password";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
+import IngredientPage from "../../pages/ingredient/ingredient-page";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../protected-route/protected-route";
 
@@ -23,6 +25,10 @@ const App = () => {
     });
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
   if (!isUserLoaded) {
     return null;
   }
@@ -33,6 +39,9 @@ const App = () => {
       <Switch>
         <Route path="/" exact>
           <ConstructorPage />
+        </Route>
+        <Route path="/ingredients/:ingredientId" exact>
+          <IngredientPage />
         </Route>
         <Route path="/login" exact>
           <LoginPage />

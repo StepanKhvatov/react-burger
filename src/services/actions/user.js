@@ -146,6 +146,7 @@ export const updateProfile = (form) => {
     return fetchApi({
       method: "PATCH",
       endpoint: "auth/user",
+      withAuth: true,
       body: form,
       onSuccess: (res) => dispatch(updateProfileSuccess(res)),
       onError: (error) => {
