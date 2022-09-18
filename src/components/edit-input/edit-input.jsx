@@ -16,10 +16,6 @@ const EditInput = ({
   const [disabled, setDisabled] = useState(true);
 
   const onIconClick = () => {
-    if (disableEdit) {
-      return;
-    }
-
     if (disabled && inputRef.current) {
       setTimeout(() => inputRef.current.focus(), 0);
     }
@@ -39,7 +35,7 @@ const EditInput = ({
       error={error}
       errorText={errorText}
       size="default"
-      icon="EditIcon"
+      icon={!disableEdit && "EditIcon"}
       onIconClick={onIconClick}
       onBlur={() => setDisabled(true)}
     />
