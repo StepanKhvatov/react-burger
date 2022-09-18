@@ -8,25 +8,39 @@ import {
 import PasswordInput from "../password-input/password-input";
 import { login } from "../../services/actions/user";
 
+const initialFormValues = { email: "", password: "" };
+
 const LoginForm = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-  const [form, setValue] = useState({ email: "", password: "" });
+  const [form, setValue] = useState(initialFormValues);
+  const [errors, setErrors] = useState(initialFormValues);
 
   const onChange = (e) => {
+    setErrors(initialFormValues);
+
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
 
-    dispatch(login(form)).then((res) => {
-      if (res.payload.success) {
-        history.replace({ pathname: "/" });
-      }
-    });
+    dispatch(login(form))
+      .then((res) => {
+        if (res?.payload.success) {
+          history.replace({ pathname: "/" });
+        }
+      })
+      .catch((error) => {
+        if (error.message === "email or password are incorrect") {
+          setErrors({
+            ...errors,
+            password: "Email или пароль неверны",
+          });
+        }
+      });
   };
 
   return (
@@ -46,8 +60,8 @@ const LoginForm = () => {
         onChange={onChange}
         name="password"
         placeholder="Пароль"
-        error={false}
-        errorText="Ошибка"
+        error={errors.password}
+        errorText={errors.password}
       />
       <Button htmlType="submit">Войти</Button>
     </form>

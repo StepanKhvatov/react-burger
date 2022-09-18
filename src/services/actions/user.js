@@ -81,7 +81,11 @@ export const login = (form) => {
 
         return dispatch(loginSuccess(res));
       },
-      onError: () => dispatch(loginError()),
+      onError: (error) => {
+        dispatch(loginError());
+
+        throw new Error(error?.message || error);
+      },
     });
   };
 };
