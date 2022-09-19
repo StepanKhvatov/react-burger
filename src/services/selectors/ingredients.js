@@ -15,3 +15,9 @@ export const selectIngredientsByType = (store) => {
     { bun: [], main: [], sauce: [] }
   );
 };
+
+export const selectIngredientById = (store, id) => {
+  const ingredients = selectIngredients(store);
+
+  return ingredients.find((item) => item._id === id);
+};

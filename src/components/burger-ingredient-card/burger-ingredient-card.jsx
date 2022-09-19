@@ -1,22 +1,19 @@
-import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientCardStyles from "./burger-ingredient-card.module.css";
 import { ingredientPropTypes } from "../../utils/types";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setViewedIngredient,
-  removeViewedIngredient,
-} from "../../services/actions/viewed-ingredient";
+import { useSelector, useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
 import { selectIngredientQuantity } from "../../services/selectors/ingredients-constructor";
+import { setViewedIngredientComponent } from "../../services/actions/viewed-ingredient";
 
 const BurgerIngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const ingredientQuantity = useSelector((store) =>
     selectIngredientQuantity(store, ingredient)
@@ -30,27 +27,15 @@ const BurgerIngredientCard = ({ ingredient }) => {
     }),
   });
 
-  const [isOpenInrgedientModal, setOpenIngredientModal] = useState(false);
+  const onIngredientClick = () => {
+    dispatch(setViewedIngredientComponent("modal"));
+
+    history.replace({
+      pathname: `/ingredients/${ingredient._id}`,
+    });
+  };
 
   const { name, price, image } = ingredient;
-
-  const handleSetViewedIngredient = () => {
-    setOpenIngredientModal(true);
-
-    dispatch(setViewedIngredient(ingredient));
-  };
-
-  const handleRemoveViewedIngredient = () => {
-    setOpenIngredientModal(false);
-
-    dispatch(removeViewedIngredient());
-  };
-
-  const onKeydownSelect = (event) => {
-    if (event.key === "Enter") {
-      handleSetViewedIngredient();
-    }
-  };
 
   return (
     <>
@@ -58,14 +43,12 @@ const BurgerIngredientCard = ({ ingredient }) => {
         ref={dragRef}
         tabIndex={0}
         style={{ opacity: isDrag ? "0.6" : 1 }}
-        onKeyDown={onKeydownSelect}
-        onClick={handleSetViewedIngredient}
+        onClick={onIngredientClick}
         className={`${burgerIngredientCardStyles.card} m-3`}
       >
         {!!ingredientQuantity && (
           <Counter count={ingredientQuantity} size="default" />
         )}
-
         <img
           alt={name}
           className={burgerIngredientCardStyles.image}
@@ -83,15 +66,6 @@ const BurgerIngredientCard = ({ ingredient }) => {
           {name}
         </h4>
       </li>
-      {isOpenInrgedientModal && (
-        <Modal
-          isOpen={isOpenInrgedientModal}
-          onClose={handleRemoveViewedIngredient}
-          title="Детали ингредиента"
-        >
-          <IngredientDetails />
-        </Modal>
-      )}
     </>
   );
 };

@@ -4,4 +4,9 @@
   gap: 5px;
   text-decoration: none;
   font-family: "JetBrainsMono", Arial, sans-serif;
+  color: #8585ad;
+}
+
+.link_active {
+  color: white;
 }

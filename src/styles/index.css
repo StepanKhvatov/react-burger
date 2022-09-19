@@ -36,6 +36,7 @@ code {
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 button {
@@ -52,4 +53,47 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+.container {
+  margin: auto;
+  max-width: 1250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container_location-auth {
+  margin-top: 150px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.w-full {
+  width: 100%;
 }

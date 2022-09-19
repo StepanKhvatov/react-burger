@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { checkResponse } from "../../utils/api";
+import { fetchApi } from "../../utils/api";
 
 export const createOrderRequest = createAction("CREATE_ORDER_REQUEST");
 
@@ -13,25 +13,13 @@ export const createOrder = (itemsIds) => {
   return async (dispatch) => {
     dispatch(createOrderRequest());
 
-    return fetch(`${process.env.REACT_APP_API_URL}/api/orders`, {
+    return fetchApi({
+      endpoint: "orders",
       method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ ingredients: itemsIds }),
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res?.success) {
-          return dispatch(createOrderSuccess(res.order));
-        }
-
-        return res;
-      })
-      .catch((error) => {
-        console.error("Ошибка при создании заказа:", error?.message || error);
-
-        dispatch(createOrderError());
-      });
+      body: { ingredients: itemsIds },
+      withAuth: true,
+      onSuccess: (res) => dispatch(createOrderSuccess(res.order)),
+      onError: () => dispatch(createOrderError()),
+    });
   };
 };

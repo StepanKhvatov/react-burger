@@ -3,8 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { getIngredients } from "../../services/actions/ingredients";
+import { useSelector } from "react-redux";
 import { selectIngredientsByType } from "../../services/selectors/ingredients";
 
 const getOffset = (element, container) => {
@@ -15,15 +14,9 @@ const getOffset = (element, container) => {
 };
 
 const BurgerIngredients = () => {
-  const dispatch = useDispatch();
-
   const { bun, main, sauce } = useSelector(selectIngredientsByType);
 
   const [currentType, setCurrentType] = useState("bun");
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   useEffect(() => {
     const scrollContainer = document.getElementById("scroll-container");

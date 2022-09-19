@@ -13,30 +13,30 @@ const iconsByName = {
   profile: ProfileIcon,
 };
 
-const NavigationLink = ({ icon = "burger", title, to = "/", classes = "" }) => {
+const NavigationLink = ({
+  icon,
+  title,
+  to = "/",
+  classes = "",
+  exact = false,
+}) => {
   const Icon = iconsByName[icon];
 
   return (
     <NavLink
+      exact={exact}
       to={to}
-      className={({ isActive }) =>
-        `${navigationLinkStyles.link} text text_type_main-default ${classes} ${
-          isActive ? "" : "text_color_inactive"
-        }`
-      }
+      activeClassName={navigationLinkStyles.link_active}
+      className={`${navigationLinkStyles.link} text  ${classes}`}
     >
-      {({ isActive }) => (
-        <>
-          <Icon type={isActive ? "primary" : "secondary"} />
-          {title}
-        </>
-      )}
+      {typeof Icon === "function" && <Icon type={"secondary"} />}
+      {title}
     </NavLink>
   );
 };
 
 NavigationLink.propTypes = {
-  icon: PropTypes.oneOf(["burger", "list", "profile"]).isRequired,
+  icon: PropTypes.oneOf(["burger", "list", "profile"]),
   title: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   classes: PropTypes.string,

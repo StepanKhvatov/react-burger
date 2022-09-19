@@ -8,10 +8,22 @@ const AppHeader = () => {
       <div className={appHeaderStyles.container}>
         <ul className={appHeaderStyles["links-container"]}>
           <li>
-            <NavigationLink title="Конструктор" to="/" icon="burger" />
+            <NavigationLink
+              title="Конструктор"
+              to="/"
+              icon="burger"
+              exact
+              classes="text_type_main-default"
+            />
           </li>
           <li>
-            <NavigationLink title="Лента заказов" to="/" icon="list" />
+            <NavigationLink
+              title="Лента заказов"
+              to="/orders"
+              icon="list"
+              exact
+              classes="text_type_main-default"
+            />
           </li>
         </ul>
         <div className={appHeaderStyles["logo-container"]}>
@@ -19,9 +31,9 @@ const AppHeader = () => {
         </div>
         <NavigationLink
           title="Личный кабинет"
-          to="/"
+          to="/profile"
           icon="profile"
-          classes={appHeaderStyles["profile-link"]}
+          classes={`${appHeaderStyles["profile-link"]} text_type_main-default`}
         />
       </div>
     </header>
