@@ -65,7 +65,7 @@ const combineHeaders = (withAuth: boolean) => {
   if (withAuth) {
     const token = getCookie("token");
 
-    initialHeaders.Authorization = `Bearer ${token}`;
+    initialHeaders.Authorization = token;
   }
 
   return initialHeaders;
