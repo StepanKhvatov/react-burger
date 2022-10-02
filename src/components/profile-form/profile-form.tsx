@@ -5,12 +5,18 @@ import { updateProfile } from "../../services/actions/user";
 import { selectUser } from "../../services/selectors/user";
 import EditInput from "../edit-input/edit-input";
 
+type TProfileFormValues = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 const ProfileForm = () => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector(selectUser);
 
-  const [form, setValue] = useState({
+  const [form, setValue] = useState<TProfileFormValues>({
     name: user.name,
     email: user.email,
     password: "******",

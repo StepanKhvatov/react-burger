@@ -8,6 +8,11 @@ import PasswordInput from "../password-input/password-input";
 import { login } from "../../services/actions/user";
 import { useAppDispatch } from "../../services/store";
 
+type TLoginFormValues = {
+  email: string;
+  password: string;
+};
+
 const initialFormValues = { email: "", password: "" };
 
 const LoginForm: FC = () => {
@@ -15,8 +20,8 @@ const LoginForm: FC = () => {
 
   const history = useHistory();
 
-  const [form, setValue] = useState(initialFormValues);
-  const [errors, setErrors] = useState(initialFormValues);
+  const [form, setValue] = useState<TLoginFormValues>(initialFormValues);
+  const [errors, setErrors] = useState<TLoginFormValues>(initialFormValues);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setErrors(initialFormValues);

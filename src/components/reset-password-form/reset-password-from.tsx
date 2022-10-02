@@ -8,12 +8,17 @@ import {
 import PasswordInput from "../password-input/password-input";
 import { resetPassword } from "../../services/actions/user";
 
+type TResetPasswordFormValues = {
+  password: string;
+  token: string;
+};
+
 const ResetPasswordForm: FC = () => {
   const history = useHistory();
 
   const dispatch = useAppDispatch();
 
-  const [form, setValue] = useState<{ password: string; token: string }>({
+  const [form, setValue] = useState<TResetPasswordFormValues>({
     password: "",
     token: "",
   });

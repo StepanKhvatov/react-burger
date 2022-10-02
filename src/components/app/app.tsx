@@ -16,7 +16,7 @@ import ProtectedRoute from "../protected-route/protected-route";
 import { useAppDispatch } from "../../services/store";
 
 const App: FC = () => {
-  const [isUserLoaded, setUserLoaded] = useState(false);
+  const [isUserLoaded, setUserLoaded] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 

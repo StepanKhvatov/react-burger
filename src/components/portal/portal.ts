@@ -2,9 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 const Portal: FC = ({ children }) => {
-  const [modalRoot, setModalRoot] = useState(
-    document.getElementById("modal-root")
-  );
+  const [modalRoot, setModalRoot] = useState<HTMLDivElement>();
 
   useEffect(() => {
     if (!modalRoot) {

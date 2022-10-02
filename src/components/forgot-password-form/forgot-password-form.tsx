@@ -12,7 +12,7 @@ const ForgotPasswordForm = () => {
 
   const dispatch = useAppDispatch();
 
-  const [form, setValue] = useState({ email: "" });
+  const [form, setValue] = useState<{ email: string }>({ email: "" });
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [event.target.name]: event.target.value });

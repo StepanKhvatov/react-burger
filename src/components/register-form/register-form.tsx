@@ -8,12 +8,24 @@ import {
 import PasswordInput from "../password-input/password-input";
 import { register } from "../../services/actions/user";
 
+type TRegisterFormValues = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+const initialFormValues = {
+  name: "",
+  email: "",
+  password: "",
+};
+
 const RegisterForm = () => {
   const dispatch = useAppDispatch();
 
   const history = useHistory();
 
-  const [form, setValue] = useState({ name: "", email: "", password: "" });
+  const [form, setValue] = useState<TRegisterFormValues>(initialFormValues);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [event.target.name]: event.target.value });
