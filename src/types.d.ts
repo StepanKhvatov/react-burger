@@ -15,6 +15,16 @@ export type TIngredient = {
   readonly __v: number;
 };
 
+export type TOrder = {
+  readonly ingredients: ReadonlyArray<string>;
+  readonly _id: string;
+  readonly status: string;
+  readonly number: number;
+  readonly name: string;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+};
+
 export type TIngredientWithKey = TIngredient & {
   readonly key: number;
 };

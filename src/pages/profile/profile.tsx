@@ -3,10 +3,15 @@ import { Switch, Route } from "react-router-dom";
 import { useAppDispatch } from "../../services/store";
 import ProfileForm from "../../components/profile-form/profile-form";
 import NavigationLink from "../../components/navigation-link/navigation-link";
+import { data } from "../../utils/orders-data";
+import OrderCard from "../../components/order-card/order-card";
+import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 import profilePageStyles from "./profile.module.css";
 import { logout } from "../../services/actions/user";
 
 const ProfilePage: FC = () => {
+  const { orders } = data;
+
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
@@ -47,6 +52,15 @@ const ProfilePage: FC = () => {
         <Switch>
           <Route path="/profile" exact>
             <ProfileForm />
+          </Route>
+          <Route path="/profile/orders">
+            <div
+              className={`container__scroll-content ${customScrollbarStyles["custom-scrollbar"]} pr-5`}
+            >
+              {orders.map((item) => {
+                return <OrderCard key={item._id} item={item} />;
+              })}
+            </div>
           </Route>
         </Switch>
       </div>

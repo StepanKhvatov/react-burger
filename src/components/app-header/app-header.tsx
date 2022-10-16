@@ -20,7 +20,7 @@ const AppHeader: FC = () => {
           <li>
             <NavigationLink
               title="Лента заказов"
-              to="/orders"
+              to="/feed"
               icon="list"
               exact
               classes="text_type_main-default"

@@ -93,7 +93,7 @@ const BurgerIngredients = () => {
       </ul>
       <div
         id="scroll-container"
-        className={`${burgerIngredientsStyles["scroll-container"]} ${customScrollbarStyles["custom-scrollbar"]} pr-5`}
+        className={`container__scroll-content ${customScrollbarStyles["custom-scrollbar"]} pr-5`}
       >
         <div id="bun" className="pb-5">
           <h2

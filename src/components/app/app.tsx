@@ -12,6 +12,7 @@ import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
 import IngredientPage from "../../pages/ingredient/ingredient-page";
 import NotFountPage from "../../pages/not-found/not-found";
+import FeedPage from "../../pages/feed/feed";
 import ProtectedRoute from "../protected-route/protected-route";
 import { useAppDispatch } from "../../services/store";
 
@@ -58,6 +59,9 @@ const App: FC = () => {
         </Route>
         <ProtectedRoute path="/profile" exact={false}>
           <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/feed" exact>
+          <FeedPage />
         </ProtectedRoute>
         <Route path="*">
           <NotFountPage />
