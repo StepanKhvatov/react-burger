@@ -17,8 +17,8 @@ const ProfileForm = () => {
   const user = useAppSelector(selectUser);
 
   const [form, setValue] = useState<TProfileFormValues>({
-    name: user.name,
-    email: user.email,
+    name: user?.name || "",
+    email: user?.email || "",
     password: "******",
   });
 
@@ -33,10 +33,10 @@ const ProfileForm = () => {
   };
 
   const onReset = () => {
-    setValue({ ...form, email: user.email, name: user.name });
+    setValue({ ...form, email: user?.email || "", name: user?.name || "" });
   };
 
-  const isFormCaanged = user.name !== form.name || user.email !== form.email;
+  const isFormCaanged = user?.name !== form.name || user.email !== form.email;
 
   return (
     <form onSubmit={onSubmit} className="form-container">

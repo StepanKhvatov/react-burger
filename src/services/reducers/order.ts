@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { TOwnerOrder } from "../../types";
 import {
   createOrderRequest,
   createOrderError,
@@ -6,8 +7,15 @@ import {
   clearOrderState,
 } from "../actions/order";
 
-const initialState = {
-  item: {},
+type TOrderState = {
+  item: TOwnerOrder | null;
+  CREATE_ORDER_REQUEST: boolean;
+  CREATE_ORDER_ERROR: boolean;
+  CREATE_ORDER_SUCCESS: boolean;
+};
+
+const initialState: TOrderState = {
+  item: null,
   CREATE_ORDER_REQUEST: false,
   CREATE_ORDER_ERROR: false,
   CREATE_ORDER_SUCCESS: false,

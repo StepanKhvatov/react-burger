@@ -5,7 +5,9 @@ import orderDetailsStyles from "./order-details.module.css";
 import { selectOrder } from "../../services/selectors/order";
 
 const OrderDetails: FC = () => {
-  const { number } = useAppSelector(selectOrder);
+  const order = useAppSelector(selectOrder);
+
+  const { number } = order || {};
 
   return (
     <div className={`${orderDetailsStyles.container} pt-15 pb-15`}>

@@ -1,12 +1,18 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { TIngredient } from "../../types";
 import {
   setViewedIngredient,
   removeViewedIngredient,
   setViewedIngredientComponent,
 } from "../actions/viewed-ingredient";
 
-const initialState = {
-  item: {},
+type TViewedIngredientState = {
+  item: TIngredient | null;
+  component: "page" | "modal";
+};
+
+const initialState: TViewedIngredientState = {
+  item: null,
   component: "page",
 };
 
@@ -18,7 +24,7 @@ export const viewedIngredientReducer = createReducer(
         state.item = action.payload;
       })
       .addCase(removeViewedIngredient, (state) => {
-        state.item = {};
+        state.item = null;
       })
       .addCase(setViewedIngredientComponent, (state, action) => {
         state.component = action.payload;

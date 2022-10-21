@@ -1,11 +1,17 @@
 import { createReducer, nanoid } from "@reduxjs/toolkit";
+import { TIngredientWithKey, TIngredient } from "../../types";
 import {
   insertIngredient,
   removeIngredient,
   updateIngredientsSorting,
 } from "../actions/ingredients-constructor";
 
-const initialState = {
+type TIngredientsConstructorState = {
+  blockedItem: TIngredient | null;
+  unblockedItems: Array<TIngredientWithKey>;
+};
+
+const initialState: TIngredientsConstructorState = {
   blockedItem: null,
   unblockedItems: [],
 };

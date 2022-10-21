@@ -1,11 +1,19 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { TIngredient } from "../../types";
 import {
   getIngredientsRequest,
   getIngredientsError,
   getIngredientsSuccess,
 } from "../actions/ingredients";
 
-const initialState = {
+type TIngredientsState = {
+  items: Array<TIngredient>;
+  GET_INGREDIENTS_REQUEST: boolean;
+  GET_INGREDIENTS__ERROR: boolean;
+  GET_INGREDIENTS_SUCCESS: boolean;
+};
+
+const initialState: TIngredientsState = {
   items: [],
   GET_INGREDIENTS_REQUEST: false,
   GET_INGREDIENTS__ERROR: false,

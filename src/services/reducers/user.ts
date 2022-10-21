@@ -22,8 +22,35 @@ import {
   logoutError,
   logoutSuccess,
 } from "../actions/user";
+import type { TUser } from "../../types";
 
-const initialState = {
+type TUserState = {
+  data: TUser | undefined;
+  accessToken: string | null;
+  REGISTER_REQUEST: boolean;
+  REGISTER_ERROR: boolean;
+  REGISTER_SUCCESS: boolean;
+  LOGIN_REQUEST: boolean;
+  LOGIN_ERROR: boolean;
+  LOGIN_SUCCESS: boolean;
+  FORGOT_PASSWORD_REQUEST: boolean;
+  FORGOT_PASSWORD_ERROR: boolean;
+  FORGOT_PASSWORD_SUCCESS: boolean;
+  RESET_PASSWORD_REQUEST: boolean;
+  RESET_PASSWORD_ERROR: boolean;
+  RESET_PASSWORD_SUCCESS: boolean;
+  UPDATE_PROFILE_REQUEST: boolean;
+  UPDATE_PROFILE_ERROR: boolean;
+  UPDATE_PROFILE_SUCCESS: boolean;
+  GET_USER_REQUEST: boolean;
+  GET_USER_ERROR: boolean;
+  GET_USER_SUCCESS: boolean;
+  LOGOUT_REQUEST: boolean;
+  LOGOUT_ERROR: boolean;
+  LOGOUT_SUCCESS: boolean;
+};
+
+const initialState: TUserState = {
   data: undefined,
   accessToken: null,
   REGISTER_REQUEST: false,

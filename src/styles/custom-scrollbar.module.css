@@ -9,3 +9,7 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #8585ad;
 }
+
+.custom-scrollbar_direction-vertical {
+  overflow-x: hidden;
+}
