@@ -3,9 +3,15 @@
   overflow-y: hidden;
   display: grid;
   grid-template-rows: repeat(10, auto);
-  gap: 5px;
+  row-gap: 5px;
+  column-gap: 20px;
   grid-auto-columns: auto;
   grid-auto-flow: column;
+  padding-bottom: 10px;
+}
+
+.orders-column_orders-ready {
+  color: #00cccc;
 }
 
 .column {

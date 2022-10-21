@@ -13,3 +13,12 @@
 .custom-scrollbar_direction-vertical {
   overflow-x: hidden;
 }
+
+.custom-scrollbar_direction-horizontal {
+  overflow-y: hidden;
+}
+
+.custom-scrollbar_direction-horizontal::-webkit-scrollbar {
+  overflow-y: hidden;
+  height: 8px;
+}

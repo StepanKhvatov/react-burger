@@ -66,7 +66,7 @@ const ProfilePage: FC = () => {
           <Route path="/profile" exact>
             <ProfileForm />
           </Route>
-          <Route path="/profile/orders">
+          <Route path="/profile/orders" exact>
             <div
               className={`container__scroll-content ${customScrollbarStyles["custom-scrollbar"]} w-full pr-5`}
             >

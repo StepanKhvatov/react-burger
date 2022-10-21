@@ -6,28 +6,8 @@ import {
   feedWsConnectionStart,
   feedWsConnectionEnd,
 } from "../../services/actions/feed-orders";
-import styles from "./feed.module.css";
+import OrdersListColumn from "../../components/orders-list-column/orders-list-column";
 import { TOrder } from "../../types";
-
-const OrdersListColumn: FC<{
-  orders: ReadonlyArray<TOrder>;
-  title: string;
-}> = ({ orders, title }) => {
-  return (
-    <div className={`${styles.column} flex flex-col`}>
-      <h3 className="text text_type_main-medium mb-5">{title}</h3>
-      <ul className={`${styles["orders-column"]}`}>
-        {orders.map((item) => {
-          return (
-            <li key={item._id} className="text text_type_digits-default">
-              {item.number}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-};
 
 const FeedPage: FC = () => {
   const { wsConnected, messages } = useAppSelector((store) => store.feedOrders);
@@ -73,11 +53,16 @@ const FeedPage: FC = () => {
           })}
         </div>
         <div className="w-full flex flex-col">
-          <div className="flex flex-row w-full mb-8">
-            <OrdersListColumn title="Готовы:" orders={doneOrders} />
+          <div className="flex flex-row w-full mb-15">
+            <OrdersListColumn
+              title="Готовы:"
+              orders={doneOrders}
+              classes="mr-9"
+              isOrdersReady
+            />
             <OrdersListColumn title="В работе:" orders={inWorkOrders} />
           </div>
-          <div className="flex flex-col mb-8">
+          <div className="flex flex-col mb-15">
             <h3 className="text text_type_main-medium">
               Выполнено за все время:
             </h3>
