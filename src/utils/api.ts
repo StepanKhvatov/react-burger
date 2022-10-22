@@ -63,7 +63,7 @@ const combineHeaders = (withAuth: boolean) => {
   };
 
   if (withAuth) {
-    const token = getCookie("token");
+    const token = localStorage.getItem("token") || "";
 
     initialHeaders.Authorization = token;
   }

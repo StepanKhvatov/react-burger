@@ -1,5 +1,4 @@
 import { Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
-import { getCookie } from "../../utils/api";
 import type { AppDispatch, RootState } from "../store";
 import type { TWsActions } from "../../types";
 
@@ -10,7 +9,7 @@ export const socketMiddleware = (
   return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
-    const token = getCookie("token");
+    const token = localStorage.getItem("token");
 
     return (next) => (action) => {
       const { dispatch } = store;
