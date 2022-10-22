@@ -31,7 +31,7 @@ const BurgerConstructorFooter = () => {
   const onSumbit = () => {
     if (user) {
       return dispatch(createOrder(orderIngredientsIds)).then((res) => {
-        if (res?.payload?.number) {
+        if (res?.success) {
           setOrderModalOpen(true);
         }
 

@@ -22,7 +22,11 @@ export const createOrder = (itemsIds: Array<string>) => {
       method: "POST",
       body: { ingredients: itemsIds },
       withAuth: true,
-      onSuccess: (res) => dispatch(createOrderSuccess(res.order)),
+      onSuccess: (res) => {
+        dispatch(createOrderSuccess(res.order));
+
+        return res;
+      },
       onError: () => dispatch(createOrderError()),
     });
   };
