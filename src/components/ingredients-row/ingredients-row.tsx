@@ -1,5 +1,6 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { nanoid } from "@reduxjs/toolkit";
+import IngredientBadge from "../ingredient-badge/ingredient-badge";
 import type { TIngredient } from "../../types";
 import ingredientsRowStyles from "./ingredients-row.module.css";
 
@@ -8,21 +9,23 @@ type TIngredientsRowProps = {
 };
 
 const IngredientsRow: FC<TIngredientsRowProps> = ({ items }) => {
+  const itemsToShow = useMemo(() => {
+    return items.slice(0, 6);
+  }, [items]);
+
   return (
     <ul className={`${ingredientsRowStyles.container} flex`}>
-      {items.map((item) => {
+      {itemsToShow.map((item, index) => {
         if (item) {
-          const { image, name } = item;
-
           return (
             <li
+              style={{ zIndex: 100 - index * 2 }}
               key={nanoid()}
               className={ingredientsRowStyles["ingredient-container"]}
             >
-              <img
-                src={image}
-                alt={`${name}-ingredient`}
-                className={ingredientsRowStyles["ingredient-image"]}
+              <IngredientBadge
+                item={item}
+                counter={index === 5 ? items.length - 6 : undefined}
               />
             </li>
           );

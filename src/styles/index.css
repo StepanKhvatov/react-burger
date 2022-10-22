@@ -91,3 +91,15 @@ ul {
 .w-full {
   width: 100%;
 }
+
+.text_color_success {
+  color: #00cccc;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}

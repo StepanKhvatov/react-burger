@@ -11,6 +11,8 @@ import {
   userFeedWsConnectionStart,
   userFeedWsConnectionEnd,
 } from "../../services/actions/user-orders";
+import OrderPage from "../order/order-page";
+import Loader from "../../components/loader/loader";
 
 const ProfilePage: FC = () => {
   const { wsConnected, messages } = useAppSelector((store) => store.userOrders);
@@ -67,13 +69,29 @@ const ProfilePage: FC = () => {
             <ProfileForm />
           </Route>
           <Route path="/profile/orders" exact>
-            <div
-              className={`container__scroll-content ${customScrollbarStyles["custom-scrollbar"]} w-full pr-5`}
-            >
-              {orders.map((item) => {
-                return <OrderCard key={item._id} item={item} />;
-              })}
-            </div>
+            {wsConnected && messages.length ? (
+              <div
+                className={`container__scroll-content ${customScrollbarStyles["custom-scrollbar"]} w-full pr-5`}
+              >
+                {orders.map((item) => {
+                  return (
+                    <OrderCard
+                      key={item._id}
+                      item={item}
+                      withStatus
+                      isUserOrder
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="flex justify-center w-full">
+                <Loader />
+              </div>
+            )}
+          </Route>
+          <Route path="/profile/orders/:id">
+            <OrderPage isProfileLocation />
           </Route>
         </Switch>
       </div>

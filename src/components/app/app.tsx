@@ -60,9 +60,9 @@ const App: FC = () => {
         <ProtectedRoute path="/profile" exact={false}>
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path="/feed" exact>
+        <Route path="/feed">
           <FeedPage />
-        </ProtectedRoute>
+        </Route>
         <Route path="*">
           <NotFountPage />
         </Route>

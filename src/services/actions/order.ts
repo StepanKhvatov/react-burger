@@ -7,7 +7,9 @@ export const createOrderRequest = createAction("CREATE_ORDER_REQUEST");
 
 export const createOrderError = createAction("CREATE_ORDER_ERROR");
 
-export const createOrderSuccess = createAction<TOwnerOrder>("CREATE_ORDER_SUCCESS");
+export const createOrderSuccess = createAction<TOwnerOrder>(
+  "CREATE_ORDER_SUCCESS"
+);
 
 export const clearOrderState = createAction("CLEAR_ORDER_STATE");
 
@@ -20,9 +22,7 @@ export const createOrder = (itemsIds: Array<string>) => {
       method: "POST",
       body: { ingredients: itemsIds },
       withAuth: true,
-      onSuccess: (res) => {
-        dispatch(createOrderSuccess(res.order));
-      },
+      onSuccess: (res) => dispatch(createOrderSuccess(res.order)),
       onError: () => dispatch(createOrderError()),
     });
   };
