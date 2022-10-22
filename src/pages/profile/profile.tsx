@@ -1,5 +1,5 @@
-import { FC, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import { FC, useEffect, useMemo } from "react";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../services/store";
 import ProfileForm from "../../components/profile-form/profile-form";
 import NavigationLink from "../../components/navigation-link/navigation-link";
@@ -15,6 +15,8 @@ import OrderPage from "../order/order-page";
 import Loader from "../../components/loader/loader";
 
 const ProfilePage: FC = () => {
+  const location = useLocation();
+
   const { wsConnected, messages } = useAppSelector((store) => store.userOrders);
 
   const { orders = [] } = messages[0] || {};
@@ -33,37 +35,47 @@ const ProfilePage: FC = () => {
     };
   }, [dispatch]);
 
+  const sortedOrders = useMemo(() => {
+    return [...orders].sort((a, b) => {
+      return b.number - a.number;
+    });
+  }, [orders]);
+
+  const isOrderPage = location.pathname.includes("/profile/orders/");
+
   return (
     <section className="container pt-10 pb-10 pr-5 pl-5">
       <div className={`${profilePageStyles.content} flex items-start`}>
-        <div
-          className={`${profilePageStyles.navigation} flex flex-col items-start`}
-        >
-          <NavigationLink
-            exact
-            to="/profile"
-            title="Профиль"
-            classes="text_type_main-medium"
-          />
-          <NavigationLink
-            exact
-            to="/profile/orders"
-            title="История заказов"
-            classes="text_type_main-medium"
-          />
-          <button
-            onClick={handleLogout}
-            type="button"
-            className="text text_type_main-medium text_color_inactive"
+        {!isOrderPage && (
+          <div
+            className={`${profilePageStyles.navigation} flex flex-col items-start`}
           >
-            Выход
-          </button>
-          <p
-            className={`${profilePageStyles.description} text text_type_main-default text_color_inactive mt-10`}
-          >
-            В этом разделе вы можете изменить свои персональные данные
-          </p>
-        </div>
+            <NavigationLink
+              exact
+              to="/profile"
+              title="Профиль"
+              classes="text_type_main-medium"
+            />
+            <NavigationLink
+              exact
+              to="/profile/orders"
+              title="История заказов"
+              classes="text_type_main-medium"
+            />
+            <button
+              onClick={handleLogout}
+              type="button"
+              className="text text_type_main-medium text_color_inactive"
+            >
+              Выход
+            </button>
+            <p
+              className={`${profilePageStyles.description} text text_type_main-default text_color_inactive mt-10`}
+            >
+              В этом разделе вы можете изменить свои персональные данные
+            </p>
+          </div>
+        )}
         <Switch>
           <Route path="/profile" exact>
             <ProfileForm />
@@ -73,7 +85,7 @@ const ProfilePage: FC = () => {
               <div
                 className={`container__scroll-content ${customScrollbarStyles["custom-scrollbar"]} w-full pr-5`}
               >
-                {orders.map((item) => {
+                {sortedOrders.map((item) => {
                   return (
                     <OrderCard
                       key={item._id}

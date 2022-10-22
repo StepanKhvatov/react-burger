@@ -9,8 +9,6 @@ export const socketMiddleware = (
   return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
-    const token = localStorage.getItem("token");
-
     return (next) => (action) => {
       const { dispatch } = store;
 
@@ -27,6 +25,8 @@ export const socketMiddleware = (
       } = wsActions;
 
       if (type === wsInit().type) {
+        const token = localStorage.getItem("token");
+
         socket = new WebSocket(
           `${wsUrl}${
             token ? `?token=${token.replace("Bearer", "").trim()}` : ""
