@@ -20,7 +20,7 @@ const IngredientsRow: FC<TIngredientsRowProps> = ({ items }) => {
           return (
             <li
               style={{ zIndex: 100 - index * 2 }}
-              key={nanoid()}
+              key={`${item._id}-${index}`}
               className={ingredientsRowStyles["ingredient-container"]}
             >
               <IngredientBadge

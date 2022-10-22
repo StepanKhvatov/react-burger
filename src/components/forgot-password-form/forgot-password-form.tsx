@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch } from "../../services/store";
 import {
@@ -18,7 +18,7 @@ const ForgotPasswordForm = () => {
     setValue({ ...form, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (event: ChangeEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     dispatch(forgotPassword(form)).then((res) => {
