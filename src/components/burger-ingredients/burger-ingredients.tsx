@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useInView } from "react-intersection-observer";
 import BurgerIngredientCard from "../burger-ingredient-card/burger-ingredient-card";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
@@ -7,68 +8,59 @@ import { useAppSelector } from "../../services/store";
 import { selectIngredientsByType } from "../../services/selectors/ingredients";
 import type { TIngredient } from "../../types";
 
-const getOffset = (element: Element, container: Element) => {
-  const offset =
-    element.getBoundingClientRect().top - container.getBoundingClientRect().top;
-
-  return offset;
-};
-
 const BurgerIngredients = () => {
+  const { ref: bunRef, inView: bunInView } = useInView({
+    threshold: 1,
+    root: document.getElementById("scroll-container"),
+  });
+
+  const { ref: sauceRef, inView: sauceInView } = useInView({
+    threshold: 1,
+    root: document.getElementById("scroll-container"),
+  });
+
+  const { ref: mainRef, inView: mainInView } = useInView({
+    threshold: 0.3,
+    root: document.getElementById("scroll-container"),
+  });
+
   const { bun, main, sauce } = useAppSelector(selectIngredientsByType);
 
   const [currentType, setCurrentType] = useState<string>("bun");
 
   useEffect(() => {
-    const scrollContainer = document.getElementById(
-      "scroll-container"
-    ) as HTMLDivElement;
+    if (bunInView) {
+      setCurrentType("bun");
+    }
+  }, [bunInView]);
 
-    const listener = (event: Event) => {
-      const target = event.target as HTMLDivElement;
+  useEffect(() => {
+    if (sauceInView) {
+      setCurrentType("sauce");
+    }
+  }, [sauceInView]);
 
-      const childrensArray = Array.from(target.children);
+  useEffect(() => {
+    if (mainInView) {
+      setCurrentType("main");
+    }
+  }, [mainInView]);
 
-      const offsetsElement = childrensArray.map((item) => {
-        return {
-          offset: Math.abs(getOffset(item, target)),
-          id: item.id,
-        };
-      });
+  const onTabClick = (tab: string) => {
+    setCurrentType(tab);
 
-      const nearestElement = offsetsElement.reduce<{
-        offset: number;
-        id: string;
-      }>(
-        (acc, item) => {
-          if (acc.offset < item.offset) {
-            return acc;
-          }
+    const element = document.getElementById(tab);
 
-          return item;
-        },
-        { offset: 0, id: "bun" }
-      );
-
-      setCurrentType(nearestElement.id);
-    };
-
-    scrollContainer.addEventListener("scroll", listener);
-
-    return () => {
-      scrollContainer.removeEventListener("scroll", listener);
-    };
-  }, []);
+    element?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div className={burgerIngredientsStyles["burger-ingredients"]}>
       <ul className={`${burgerIngredientsStyles["tabs-container"]} mb-10`}>
         <li className={burgerIngredientsStyles.tab}>
-          <Tab
-            value="bun"
-            active={currentType === "bun"}
-            onClick={() => undefined}
-          >
+          <Tab value="bun" active={currentType === "bun"} onClick={onTabClick}>
             Булки
           </Tab>
         </li>
@@ -76,7 +68,7 @@ const BurgerIngredients = () => {
           <Tab
             value="sauce"
             active={currentType === "sauce"}
-            onClick={() => undefined}
+            onClick={onTabClick}
           >
             Соусы
           </Tab>
@@ -85,7 +77,7 @@ const BurgerIngredients = () => {
           <Tab
             value="main"
             active={currentType === "main"}
-            onClick={() => undefined}
+            onClick={onTabClick}
           >
             Начинки
           </Tab>
@@ -95,7 +87,7 @@ const BurgerIngredients = () => {
         id="scroll-container"
         className={`container__scroll-content ${customScrollbarStyles["custom-scrollbar"]} pr-5`}
       >
-        <div id="bun" className="pb-5">
+        <div ref={bunRef} id="bun" className="pb-5">
           <h2
             className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
           >
@@ -107,7 +99,7 @@ const BurgerIngredients = () => {
             ))}
           </ul>
         </div>
-        <div id="sauce" className="pb-5 pt-5">
+        <div ref={sauceRef} id="sauce" className="pb-5 pt-5">
           <h2
             className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
           >
@@ -119,7 +111,7 @@ const BurgerIngredients = () => {
             ))}
           </ul>
         </div>
-        <div id="main" className="pb-5 pt-5">
+        <div ref={mainRef} id="main" className="pb-5 pt-5">
           <h2
             className={`${burgerIngredientsStyles.type} text text_type_main-medium mb-6`}
           >

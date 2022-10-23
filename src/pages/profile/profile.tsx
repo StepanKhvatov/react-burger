@@ -1,6 +1,7 @@
 import { FC, useEffect, useMemo } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../services/store";
+import { selectViewedOrderComponent } from "../../services/selectors/viewed-order";
 import ProfileForm from "../../components/profile-form/profile-form";
 import NavigationLink from "../../components/navigation-link/navigation-link";
 import OrderCard from "../../components/order-card/order-card";
@@ -18,6 +19,8 @@ const ProfilePage: FC = () => {
   const location = useLocation();
 
   const { wsConnected, messages } = useAppSelector((store) => store.userOrders);
+
+  const viewedOrderComponent = useAppSelector(selectViewedOrderComponent);
 
   const { orders = [] } = messages[0] || {};
 
@@ -41,7 +44,9 @@ const ProfilePage: FC = () => {
     });
   }, [orders]);
 
-  const isOrderPage = location.pathname.includes("/profile/orders/");
+  const isOrderPage =
+    location.pathname.includes("/profile/orders/") &&
+    viewedOrderComponent === "page";
 
   return (
     <section className="container pt-10 pb-10 pr-5 pl-5">
@@ -80,7 +85,7 @@ const ProfilePage: FC = () => {
           <Route path="/profile" exact>
             <ProfileForm />
           </Route>
-          <Route path="/profile/orders" exact>
+          <Route path="/profile/orders" exact={viewedOrderComponent === "page"}>
             {wsConnected && messages.length ? (
               <div
                 className={`container__scroll-content ${customScrollbarStyles["custom-scrollbar"]} w-full pr-5`}
@@ -101,6 +106,9 @@ const ProfilePage: FC = () => {
                 <Loader />
               </div>
             )}
+            <Route path="/profile/orders/:id">
+              <OrderPage isProfileLocation />
+            </Route>
           </Route>
           <Route path="/profile/orders/:id">
             <OrderPage isProfileLocation />

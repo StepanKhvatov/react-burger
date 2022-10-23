@@ -40,7 +40,7 @@ const OrderPage: FC<TOrderPageProps> = ({ isProfileLocation = false }) => {
         dispatch(removeViewedOrder());
       };
     }
-  }, [order, dispatch, history]);
+  }, [order, dispatch]);
 
   const onCloseModal = () => {
     history.replace({
@@ -48,21 +48,19 @@ const OrderPage: FC<TOrderPageProps> = ({ isProfileLocation = false }) => {
     });
   };
 
-  return (
-    <section className="container pt-10 pb-10 pr-5 pl-5">
-      {wsConnected && messages.length ? (
-        viewedOrderComponent === "modal" ? (
-          <Modal isOpen={true} onClose={onCloseModal}>
-            <OrderInfo forModal />
-          </Modal>
-        ) : (
-          <OrderInfo />
-        )
-      ) : (
-        <Loader />
-      )}
-    </section>
-  );
+  if (!wsConnected || !messages.length) {
+    return <Loader />;
+  }
+
+  if (viewedOrderComponent === "modal") {
+    return (
+      <Modal isOpen={true} onClose={onCloseModal}>
+        <OrderInfo forModal />
+      </Modal>
+    );
+  } else {
+    return <OrderInfo />;
+  }
 };
 
 export default OrderPage;

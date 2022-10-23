@@ -39,17 +39,15 @@ const IngredientPage: FC = () => {
     history.replace({ pathname: `/` });
   };
 
-  return (
-    <section className="container pt-10 pb-10 pr-5 pl-5">
-      {viewedIngredientComponent === "modal" ? (
-        <Modal isOpen={true} onClose={onCloseModal} title="Детали ингредиента">
-          <IngredientDetails />
-        </Modal>
-      ) : (
+  if (viewedIngredientComponent === "modal") {
+    return (
+      <Modal isOpen={true} onClose={onCloseModal} title="Детали ингредиента">
         <IngredientDetails />
-      )}
-    </section>
-  );
+      </Modal>
+    );
+  }
+
+  return <IngredientDetails />;
 };
 
 export default IngredientPage;

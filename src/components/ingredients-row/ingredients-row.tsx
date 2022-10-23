@@ -1,5 +1,4 @@
 import { FC, useMemo } from "react";
-import { nanoid } from "@reduxjs/toolkit";
 import IngredientBadge from "../ingredient-badge/ingredient-badge";
 import type { TIngredient } from "../../types";
 import ingredientsRowStyles from "./ingredients-row.module.css";

@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import customScrollbarStyles from "../../styles/custom-scrollbar.module.css";
 import OrderCard from "../../components/order-card/order-card";
 import { useAppDispatch, useAppSelector } from "../../services/store";
+import { selectViewedOrderComponent } from "../../services/selectors/viewed-order";
 import {
   feedWsConnectionStart,
   feedWsConnectionEnd,
@@ -13,11 +14,13 @@ import OrderPage from "../order/order-page";
 import { TOrder } from "../../types";
 
 const FeedPage: FC = () => {
+  const dispatch = useAppDispatch();
+
   const { wsConnected, messages } = useAppSelector((store) => store.feedOrders);
 
-  const { orders = [], total = 0, totalToday = 0 } = messages[0] || {};
+  const viewedComponent = useAppSelector(selectViewedOrderComponent);
 
-  const dispatch = useAppDispatch();
+  const { orders = [], total = 0, totalToday = 0 } = messages[0] || {};
 
   useEffect(() => {
     dispatch(feedWsConnectionStart());
@@ -47,7 +50,7 @@ const FeedPage: FC = () => {
   return (
     <section className="container pt-10 pb-10 pr-5 pl-5">
       <Switch>
-        <Route path="/feed" exact>
+        <Route path="/feed" exact={viewedComponent === "page"}>
           <h1 className="text text_type_main-large mb-5">Лента заказов</h1>
           {wsConnected && messages.length ? (
             <main className="container__grid-content">
@@ -87,6 +90,9 @@ const FeedPage: FC = () => {
           ) : (
             <Loader />
           )}
+          <Route path="/feed/:id">
+            <OrderPage />
+          </Route>
         </Route>
         <Route path="/feed/:id">
           <OrderPage />

@@ -1,5 +1,7 @@
 import { useEffect, useState, FC } from "react";
 import { Switch, Route } from "react-router-dom";
+import { useAppSelector } from "../../services/store";
+import { selectViewedIngredientComponent } from "../../services/selectors/viewed-ingredient";
 import { getUser } from "../../services/actions/user";
 import { getIngredients } from "../../services/actions/ingredients";
 import appStyles from "./app.module.css";
@@ -21,6 +23,8 @@ const App: FC = () => {
 
   const dispatch = useAppDispatch();
 
+  const viewedComponent = useAppSelector(selectViewedIngredientComponent);
+
   useEffect(() => {
     dispatch(getUser()).finally(() => {
       setUserLoaded(true);
@@ -39,10 +43,13 @@ const App: FC = () => {
     <div className={appStyles.app}>
       <AppHeader />
       <Switch>
-        <Route path="/" exact>
+        <Route path="/" exact={viewedComponent === "page"}>
           <ConstructorPage />
+          <Route path="/ingredients/:ingredientId">
+            <IngredientPage />
+          </Route>
         </Route>
-        <Route path="/ingredients/:ingredientId" exact>
+        <Route path="/ingredients/:ingredientId">
           <IngredientPage />
         </Route>
         <Route path="/login" exact>
