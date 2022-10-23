@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FC } from "react";
+import { useState, ChangeEvent, FC, FormEvent } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Input,
@@ -29,7 +29,7 @@ const LoginForm: FC = () => {
     setValue({ ...form, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (event: ChangeEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     dispatch(login(form))

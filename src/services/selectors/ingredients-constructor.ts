@@ -1,7 +1,13 @@
-export const selectConstructorIngredients = (store) =>
+import { RootState } from "../store";
+import type { TIngredient } from "../../types";
+
+export const selectConstructorIngredients = (store: RootState) =>
   store.ingredientsConstructor;
 
-export const selectIngredientQuantity = (store, ingredient) => {
+export const selectIngredientQuantity = (
+  store: RootState,
+  ingredient: TIngredient
+) => {
   const { _id, type } = ingredient;
 
   const { unblockedItems, blockedItem } = selectConstructorIngredients(store);
@@ -15,7 +21,7 @@ export const selectIngredientQuantity = (store, ingredient) => {
   return neededIngredients.length;
 };
 
-export const selectIngredientsTotal = (store) => {
+export const selectIngredientsTotal = (store: RootState) => {
   const { unblockedItems, blockedItem } = selectConstructorIngredients(store);
 
   const initialValue = blockedItem ? blockedItem.price * 2 : 0;
@@ -25,7 +31,7 @@ export const selectIngredientsTotal = (store) => {
   }, initialValue);
 };
 
-export const selectOrderIngredientsIds = (store) => {
+export const selectOrderIngredientsIds = (store: RootState) => {
   const { unblockedItems, blockedItem } = selectConstructorIngredients(store);
 
   const ingredientsIds = unblockedItems.map((item) => item._id);

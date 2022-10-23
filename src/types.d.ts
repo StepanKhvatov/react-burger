@@ -1,3 +1,8 @@
+import {
+  ActionCreatorWithPayload,
+  ActionCreatorWithoutPayload,
+} from "@reduxjs/toolkit";
+
 export type TIngredientType = "bun" | "sauce" | "main";
 
 export type TIngredient = {
@@ -15,13 +20,27 @@ export type TIngredient = {
   readonly __v: number;
 };
 
+export type TOrder = {
+  readonly ingredients: Array<string>;
+  readonly _id: string;
+  readonly status: "created" | "pending" | "done";
+  readonly number: number;
+  readonly name: string;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+};
+
 export type TIngredientWithKey = TIngredient & {
-  readonly key: number;
+  readonly key: string;
 };
 
 export type TUser = {
   readonly email: string;
   readonly name: string;
+};
+
+export type TOwnerOrder = TOrder & {
+  owner: TUser;
 };
 
 export type TAuthSuccessResponse = {
@@ -61,4 +80,21 @@ export type TFetchProfileSuccessResponse = {
 export type TLogoutSuccessResponse = {
   readonly success: boolean;
   readonly message: "Successful logout";
+};
+
+export type TFeedWsMessage = {
+  orders: Array<TOrder>;
+  success: boolean;
+  total: number;
+  totalToday: number;
+};
+
+export type TWsActions = {
+  wsInit: ActionCreatorWithoutPayload;
+  wsEndConnection: ActionCreatorWithoutPayload;
+  wsSendMessage: ActionCreatorWithPayload<undefined>;
+  onOpen: ActionCreatorWithoutPayload;
+  onClose: ActionCreatorWithoutPayload;
+  onError: ActionCreatorWithoutPayload;
+  onMessage: ActionCreatorWithPayload<TFeedWsMessage>;
 };

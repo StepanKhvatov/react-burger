@@ -5,8 +5,10 @@ import ingredientDetailsStyles from "./ingredient-details.module.css";
 import InfoColumn from "../info-column/info-column";
 
 const IngredientDetails: FC = () => {
+  const ingredient = useAppSelector(selectViewedIngredient);
+
   const { image_large, name, calories, fat, proteins, carbohydrates } =
-    useAppSelector(selectViewedIngredient);
+    ingredient || {};
 
   return (
     <div className={ingredientDetailsStyles.container}>

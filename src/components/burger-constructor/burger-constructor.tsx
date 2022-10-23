@@ -9,9 +9,14 @@ import DraggableConstructorElement from "../draggable-constructor-element/dragga
 import { selectConstructorIngredients } from "../../services/selectors/ingredients-constructor";
 import { useAppDispatch, useAppSelector } from "../../services/store";
 import type { TIngredientWithKey, TIngredient } from "../../types";
+import Loader from "../loader/loader";
 
 const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();
+
+  const submitLoading = useAppSelector(
+    (store) => store.order.CREATE_ORDER_REQUEST
+  );
 
   const [{ isHover }, dropRef] = useDrop<
     TIngredient,
@@ -39,6 +44,14 @@ const BurgerConstructor: FC = () => {
       }}
       className={burgerConstructorStyles["ingredients-container"]}
     >
+      {submitLoading && (
+        <div
+          className={`${burgerConstructorStyles.loader} flex flex-col items-center justify-center`}
+        >
+          <p className="text text_type_main-medium mb-4">Оформляем заказ</p>
+          <Loader />
+        </div>
+      )}
       {blockedItem && (
         <div
           className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}

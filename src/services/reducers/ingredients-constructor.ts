@@ -1,11 +1,18 @@
 import { createReducer, nanoid } from "@reduxjs/toolkit";
+import { TIngredientWithKey, TIngredient } from "../../types";
 import {
   insertIngredient,
   removeIngredient,
   updateIngredientsSorting,
+  removeAllIngredients,
 } from "../actions/ingredients-constructor";
 
-const initialState = {
+type TIngredientsConstructorState = {
+  blockedItem: TIngredient | null;
+  unblockedItems: Array<TIngredientWithKey>;
+};
+
+const initialState: TIngredientsConstructorState = {
   blockedItem: null,
   unblockedItems: [],
 };
@@ -59,6 +66,11 @@ export const ingredientsConstructorReducer = createReducer(
 
           return ingredient;
         });
+      })
+      .addCase(removeAllIngredients, (state) => {
+        state = initialState;
+
+        return state;
       })
       .addDefaultCase((state) => state);
   }

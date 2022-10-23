@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../services/store";
 import {
   setViewedIngredient,
   removeViewedIngredient,
+  setViewedIngredientComponent,
 } from "../../services/actions/viewed-ingredient";
 import { selectViewedIngredientComponent } from "../../services/selectors/viewed-ingredient";
 import Modal from "../../components/modal/modal";
@@ -37,19 +38,19 @@ const IngredientPage: FC = () => {
 
   const onCloseModal = () => {
     history.replace({ pathname: `/` });
+
+    dispatch(setViewedIngredientComponent("page"));
   };
 
-  return (
-    <section className="container pt-10 pb-10 pr-5 pl-5">
-      {viewedIngredientComponent === "modal" ? (
-        <Modal isOpen={true} onClose={onCloseModal} title="Детали ингредиента">
-          <IngredientDetails />
-        </Modal>
-      ) : (
+  if (viewedIngredientComponent === "modal") {
+    return (
+      <Modal isOpen={true} onClose={onCloseModal} title="Детали ингредиента">
         <IngredientDetails />
-      )}
-    </section>
-  );
+      </Modal>
+    );
+  }
+
+  return <IngredientDetails />;
 };
 
 export default IngredientPage;

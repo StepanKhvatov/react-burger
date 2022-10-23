@@ -1,0 +1,11 @@
+.container {
+  position: relative;
+}
+
+.ingredient-container {
+  margin-left: -15px;
+}
+
+.ingredient-container:first-of-type {
+  margin-left: 0px;
+}

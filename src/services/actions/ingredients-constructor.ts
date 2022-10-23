@@ -21,7 +21,13 @@ export const removeIngredient = createAction(
 
 export const updateIngredientsSorting = createAction(
   "UPDATE_INGREDIENTS_SORTING",
-  (draggedIngredient: TIngredientWithKey, targetIngredientIndex: number) => {
+  (
+    draggedIngredient: {
+      item: TIngredientWithKey;
+      draggedItemIndex: number;
+    },
+    targetIngredientIndex: number
+  ) => {
     return {
       payload: {
         draggedIngredient,
@@ -30,3 +36,5 @@ export const updateIngredientsSorting = createAction(
     };
   }
 );
+
+export const removeAllIngredients = createAction("REMOVE_ALL_INGREDIENTS");

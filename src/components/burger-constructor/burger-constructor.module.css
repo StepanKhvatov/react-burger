@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 20px;
+  position: relative;
 }
 
 .constructor-element-container {
@@ -55,4 +56,11 @@
 
 .constructor-element-draggeble-button:active {
   cursor: grabbing;
+}
+
+.loader {
+  position: absolute;
+  inset: 0;
+  background: rgba(19, 19, 22, 0.5);
+  z-index: 100;
 }

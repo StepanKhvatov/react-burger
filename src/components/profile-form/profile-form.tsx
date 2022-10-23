@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useAppSelector, useAppDispatch } from "../../services/store";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { updateProfile } from "../../services/actions/user";
@@ -17,8 +17,8 @@ const ProfileForm = () => {
   const user = useAppSelector(selectUser);
 
   const [form, setValue] = useState<TProfileFormValues>({
-    name: user.name,
-    email: user.email,
+    name: user?.name || "",
+    email: user?.email || "",
     password: "******",
   });
 
@@ -26,17 +26,17 @@ const ProfileForm = () => {
     setValue({ ...form, [event.target.name]: event.target.value });
   };
 
-  const onSubmit = (event: ChangeEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     dispatch(updateProfile(form));
   };
 
   const onReset = () => {
-    setValue({ ...form, email: user.email, name: user.name });
+    setValue({ ...form, email: user?.email || "", name: user?.name || "" });
   };
 
-  const isFormCaanged = user.name !== form.name || user.email !== form.email;
+  const isFormCaanged = user?.name !== form.name || user.email !== form.email;
 
   return (
     <form onSubmit={onSubmit} className="form-container">

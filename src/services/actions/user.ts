@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { fetchApi, getCookie, setCookie } from "../../utils/api";
+import { fetchApi } from "../../utils/api";
 import { AppDispatch } from "../store";
 import type {
   TUser,
@@ -79,7 +79,7 @@ export const register = (form: TUser & { password: string }) => {
       endpoint: "auth/register",
       body: form,
       onSuccess: (res) => {
-        setCookie("refresh_token", res.refreshToken);
+        localStorage.setItem("refresh_token", res.refreshToken);
 
         return dispatch(registerSuccess(res));
       },
@@ -97,8 +97,8 @@ export const login = (form: { email: string; password: string }) => {
       endpoint: "auth/login",
       body: form,
       onSuccess: (res) => {
-        setCookie("token", res.accessToken);
-        setCookie("refresh_token", res.refreshToken);
+        localStorage.setItem("token", res.accessToken);
+        localStorage.setItem("refresh_token", res.refreshToken);
 
         return dispatch(loginSuccess(res));
       },
@@ -151,11 +151,11 @@ export const refreshToken = (callback: unknown) => {
       method: "POST",
       endpoint: "auth/token",
       body: {
-        token: getCookie("refresh_token"),
+        token: localStorage.getItem("refresh_token"),
       },
       onSuccess: (res) => {
-        setCookie("token", res.accessToken);
-        setCookie("refresh_token", res.refreshToken);
+        localStorage.setItem("token", res.accessToken);
+        localStorage.setItem("refresh_token", res.refreshToken);
 
         if (typeof callback === "function") {
           dispatch(callback());
@@ -219,11 +219,11 @@ export const logout = () => {
       method: "POST",
       endpoint: "auth/logout",
       body: {
-        token: getCookie("refresh_token"),
+        token: localStorage.getItem("refresh_token"),
       },
       onSuccess: (res) => {
-        setCookie("token", "");
-        setCookie("refresh_token", "");
+        localStorage.setItem("token", "");
+        localStorage.setItem("refresh_token", "");
 
         dispatch(logoutSuccess(res));
       },

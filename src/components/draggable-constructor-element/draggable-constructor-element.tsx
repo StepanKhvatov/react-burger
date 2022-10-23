@@ -23,7 +23,10 @@ const DraggableConstructorElement: FC<TDraggableConstructorElementProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const [, dropRef] = useDrop<TIngredientWithKey>({
+  const [, dropRef] = useDrop<{
+    item: TIngredientWithKey;
+    draggedItemIndex: number;
+  }>({
     accept: "ingredient",
     drop(draggedIngredient) {
       dispatch(updateIngredientsSorting(draggedIngredient, itemIndex));

@@ -1,14 +1,9 @@
-import { Route, Redirect } from "react-router-dom";
+import { FC, ReactNode } from "react";
+import { Route, Redirect, RouteProps } from "react-router-dom";
 import { useAppSelector } from "../../services/store";
 import { selectUser } from "../../services/selectors/user";
-import { FC } from "react";
 
-type TProtectedRouteProps = {
-  path: string;
-  exact: boolean;
-};
-
-const ProtectedRoute: FC<TProtectedRouteProps> = ({
+const ProtectedRoute: FC<RouteProps & { children?: ReactNode }> = ({
   children,
   path,
   exact,
