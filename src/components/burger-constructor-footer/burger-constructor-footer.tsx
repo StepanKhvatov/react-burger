@@ -12,6 +12,7 @@ import {
   selectIngredientsTotal,
   selectOrderIngredientsIds,
 } from "../../services/selectors/ingredients-constructor";
+import { removeAllIngredients } from "../../services/actions/ingredients-constructor";
 import { selectUser } from "../../services/selectors/user";
 import { useAppDispatch, useAppSelector } from "../../services/store";
 
@@ -26,6 +27,10 @@ const BurgerConstructorFooter = () => {
 
   const orderIngredientsIds = useAppSelector(selectOrderIngredientsIds);
 
+  const submitLoading = useAppSelector(
+    (store) => store.order.CREATE_ORDER_REQUEST
+  );
+
   const [isOrderModalOpen, setOrderModalOpen] = useState<boolean>(false);
 
   const onSumbit = () => {
@@ -33,6 +38,8 @@ const BurgerConstructorFooter = () => {
       return dispatch(createOrder(orderIngredientsIds)).then((res) => {
         if (res?.success) {
           setOrderModalOpen(true);
+
+          dispatch(removeAllIngredients());
         }
 
         return res;
@@ -51,7 +58,7 @@ const BurgerConstructorFooter = () => {
         <CurrencyIcon type="primary" />
       </div>
       <Button
-        disabled={!orderIngredientsIds.length}
+        disabled={!orderIngredientsIds.length || submitLoading}
         type="primary"
         size="large"
         onClick={onSumbit}

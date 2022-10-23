@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../services/store";
 import {
   setViewedOrder,
   removeViewedOrder,
+  setViewedOrderComponent,
 } from "../../services/actions/viewed-order";
 import { selectViewedOrderComponent } from "../../services/selectors/viewed-order";
 import { selectOrderById } from "../../services/selectors/order";
@@ -46,6 +47,8 @@ const OrderPage: FC<TOrderPageProps> = ({ isProfileLocation = false }) => {
     history.replace({
       pathname: isProfileLocation ? "/profile/orders" : `/feed`,
     });
+
+    dispatch(setViewedOrderComponent("page"));
   };
 
   if (!wsConnected || !messages.length) {

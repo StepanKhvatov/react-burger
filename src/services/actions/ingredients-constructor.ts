@@ -36,3 +36,5 @@ export const updateIngredientsSorting = createAction(
     };
   }
 );
+
+export const removeAllIngredients = createAction("REMOVE_ALL_INGREDIENTS");

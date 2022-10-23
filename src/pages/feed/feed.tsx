@@ -11,7 +11,6 @@ import {
 import OrdersListColumn from "../../components/orders-list-column/orders-list-column";
 import Loader from "../../components/loader/loader";
 import OrderPage from "../order/order-page";
-import { TOrder } from "../../types";
 
 const FeedPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -40,10 +39,7 @@ const FeedPage: FC = () => {
           [key]: [...acc[key], item],
         };
       },
-      { doneOrders: [], inWorkOrders: [] } as {
-        doneOrders: ReadonlyArray<TOrder>;
-        inWorkOrders: ReadonlyArray<TOrder>;
-      }
+      { doneOrders: [], inWorkOrders: [] }
     );
   }, [orders]);
 

@@ -4,6 +4,7 @@ import {
   insertIngredient,
   removeIngredient,
   updateIngredientsSorting,
+  removeAllIngredients,
 } from "../actions/ingredients-constructor";
 
 type TIngredientsConstructorState = {
@@ -65,6 +66,11 @@ export const ingredientsConstructorReducer = createReducer(
 
           return ingredient;
         });
+      })
+      .addCase(removeAllIngredients, (state) => {
+        state = initialState;
+
+        return state;
       })
       .addDefaultCase((state) => state);
   }

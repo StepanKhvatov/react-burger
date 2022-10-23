@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../services/store";
 import {
   setViewedIngredient,
   removeViewedIngredient,
+  setViewedIngredientComponent,
 } from "../../services/actions/viewed-ingredient";
 import { selectViewedIngredientComponent } from "../../services/selectors/viewed-ingredient";
 import Modal from "../../components/modal/modal";
@@ -37,6 +38,8 @@ const IngredientPage: FC = () => {
 
   const onCloseModal = () => {
     history.replace({ pathname: `/` });
+
+    dispatch(setViewedIngredientComponent("page"));
   };
 
   if (viewedIngredientComponent === "modal") {

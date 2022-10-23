@@ -1,8 +1,6 @@
 import { FC } from "react";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import { useAppSelector } from "../../services/store";
-import { selectViewedIngredientComponent } from "../../services/selectors/viewed-ingredient";
 import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 
