@@ -7,6 +7,7 @@ import {
   TResetPasswordSuccessResponse,
   TFetchProfileSuccessResponse,
   TOrder,
+  TFeedWsMessage,
 } from "../types";
 
 export const mockOwnerOrder: TOwnerOrder = {
@@ -333,4 +334,11 @@ export const mockOrder: TOrder = {
   name: "Краторная булка N-200i",
   createdAt: "2022-10-29T17:27:33.947Z",
   updatedAt: "2022-10-29T17:27:33.947Z",
+};
+
+export const mockFeedWsMessage: TFeedWsMessage = {
+  orders: [mockOrder],
+  success: true,
+  total: 123,
+  totalToday: 12312,
 };
