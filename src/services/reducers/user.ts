@@ -50,7 +50,7 @@ type TUserState = {
   LOGOUT_SUCCESS: boolean;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   data: undefined,
   accessToken: null,
   REGISTER_REQUEST: false,

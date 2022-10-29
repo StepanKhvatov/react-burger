@@ -1,4 +1,11 @@
-import { TOwnerOrder } from "../types";
+import {
+  TOwnerOrder,
+  TUser,
+  TAuthSuccessResponse,
+  TForgotPasswordSuccessResponse,
+  TResetPasswordSuccessResponse,
+  TFetchProfileSuccessResponse,
+} from "../types";
 
 export const mockOwnerOrder: TOwnerOrder = {
   ingredients: [
@@ -56,4 +63,32 @@ export const mockOwnerOrder: TOwnerOrder = {
   updatedAt: "2022-10-29T17:27:34.375Z",
   number: 29106,
   price: 2056,
+};
+
+export const mockUser: TUser = {
+  email: "test@mail.ru",
+  name: "Test user",
+};
+
+export const mockAuthSuccessResponse: TAuthSuccessResponse = {
+  success: true,
+  user: mockUser,
+  refreshToken: "Bearer tGzv3JOkF0XG5Qx2TlKWIA",
+  accessToken: "Bearer tGzv3JOkF0XG5Qx2TlKWIA",
+};
+
+export const mockForgotPasswordSuccessResponse: TForgotPasswordSuccessResponse =
+  {
+    success: true,
+    message: "Reset email sent",
+  };
+
+export const mockResetPasswordSuccessResponse: TResetPasswordSuccessResponse = {
+  success: true,
+  message: "Password successfully reset",
+};
+
+export const mockFetchProfileSuccessResponse: TFetchProfileSuccessResponse = {
+  success: true,
+  user: mockUser,
 };

@@ -40,8 +40,8 @@ export type TUser = {
 };
 
 export type TOwnerOrder = TOrder<TIngredient> & {
-  owner: TUser;
-  price: number
+  readonly owner: TUser;
+  readonly price: number;
 };
 
 export type TAuthSuccessResponse = {
