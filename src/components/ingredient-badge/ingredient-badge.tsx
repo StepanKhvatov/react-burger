@@ -14,7 +14,7 @@ const IngredientBadge: FC<TIngredientBadgeProps> = ({ item, counter }) => {
     <div className={styles.container}>
       <div className={styles["content-container"]}>
         <img src={image} alt={`${name}-ingredient`} className={styles.image} />
-        {counter && (
+        {!!counter && (
           <>
             <div
               className={`${styles["counter-container"]} flex items-center justify-center`}
