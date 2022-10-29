@@ -6,6 +6,7 @@ import {
   TForgotPasswordSuccessResponse,
   TResetPasswordSuccessResponse,
   TFetchProfileSuccessResponse,
+  TOrder,
 } from "../types";
 
 export const mockOwnerOrder: TOwnerOrder = {
@@ -323,3 +324,13 @@ export const mockIngredients: Array<TIngredient> = [
     __v: 0,
   },
 ];
+
+export const mockOrder: TOrder = {
+  ingredients: ["60d3b41abdacab0026a733cd"],
+  _id: "60d3b41abdacab0026a733c6",
+  status: "created",
+  number: 1231,
+  name: "Краторная булка N-200i",
+  createdAt: "2022-10-29T17:27:33.947Z",
+  updatedAt: "2022-10-29T17:27:33.947Z",
+};
