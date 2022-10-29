@@ -14,7 +14,7 @@ type TOrderState = {
   CREATE_ORDER_SUCCESS: boolean;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   item: null,
   CREATE_ORDER_REQUEST: false,
   CREATE_ORDER_ERROR: false,
