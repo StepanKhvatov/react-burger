@@ -11,7 +11,7 @@ type TViewedIngredientState = {
   component: "page" | "modal";
 };
 
-const initialState: TViewedIngredientState = {
+export const initialState: TViewedIngredientState = {
   item: null,
   component: "page",
 };
