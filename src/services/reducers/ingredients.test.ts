@@ -1,13 +1,10 @@
-import {
-  ingredientsReducer,
-  initialState,
-} from "../../../services/reducers/ingredients";
+import { ingredientsReducer, initialState } from "./ingredients";
 import {
   getIngredientsRequest,
   getIngredientsError,
   getIngredientsSuccess,
-} from "../../../services/actions/ingredients";
-import { mockIngredients } from "../../../utils/mock-data";
+} from "../actions/ingredients";
+import { mockIngredients } from "../../utils/mock-data";
 
 describe("ingredients reducer", () => {
   it("should return the initial state", () => {

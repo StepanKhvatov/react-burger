@@ -1,12 +1,12 @@
-import { userReducer, initialState } from "../../../services/reducers/user";
-import * as actions from "../../../services/actions/user";
+import { userReducer, initialState } from "./user";
+import * as actions from "../actions/user";
 import {
   mockUser,
   mockAuthSuccessResponse,
   mockForgotPasswordSuccessResponse,
   mockResetPasswordSuccessResponse,
   mockFetchProfileSuccessResponse,
-} from "../../../utils/mock-data";
+} from "../../utils/mock-data";
 
 describe("order reducer", () => {
   it("should return the initial state", () => {

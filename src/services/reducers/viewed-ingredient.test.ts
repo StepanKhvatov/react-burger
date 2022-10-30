@@ -1,13 +1,10 @@
-import {
-  viewedIngredientReducer,
-  initialState,
-} from "../../../services/reducers/viewed-ingredient";
+import { viewedIngredientReducer, initialState } from "./viewed-ingredient";
 import {
   setViewedIngredient,
   removeViewedIngredient,
   setViewedIngredientComponent,
-} from "../../../services/actions/viewed-ingredient";
-import { mockIngredient } from "../../../utils/mock-data";
+} from "../actions/viewed-ingredient";
+import { mockIngredient } from "../../utils/mock-data";
 
 describe("viewed ingredient reducer", () => {
   it("should return the initial state", () => {

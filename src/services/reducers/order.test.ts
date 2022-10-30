@@ -1,11 +1,11 @@
-import { orderReducer, initialState } from "../../../services/reducers/order";
+import { orderReducer, initialState } from "./order";
 import {
   createOrderRequest,
   createOrderError,
   createOrderSuccess,
   clearOrderState,
-} from "../../../services/actions/order";
-import { mockOwnerOrder } from "../../../utils/mock-data";
+} from "../actions/order";
+import { mockOwnerOrder } from "../../utils/mock-data";
 
 describe("order reducer", () => {
   it("should return the initial state", () => {

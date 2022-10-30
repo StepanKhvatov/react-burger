@@ -1,6 +1,6 @@
 describe("Drag ingredient", () => {
   before(function () {
-    cy.visit("http://localhost:3000");
+    cy.visit("/");
   });
 
   it("перетаскивание ингредиента в конструктор", () => {

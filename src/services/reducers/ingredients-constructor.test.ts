@@ -2,14 +2,14 @@ import { nanoid } from "@reduxjs/toolkit";
 import {
   ingredientsConstructorReducer,
   initialState,
-} from "../../../services/reducers/ingredients-constructor";
+} from "./ingredients-constructor";
 import {
   insertIngredient,
   removeIngredient,
   updateIngredientsSorting,
   removeAllIngredients,
-} from "../../../services/actions/ingredients-constructor";
-import { mockIngredient, mockSauceIngredient } from "../../../utils/mock-data";
+} from "../actions/ingredients-constructor";
+import { mockIngredient, mockSauceIngredient } from "../../utils/mock-data";
 
 describe("ingredients-constructor reducer", () => {
   it("should return the initial state", () => {

@@ -1,13 +1,10 @@
-import {
-  viewedOrderReducer,
-  initialState,
-} from "../../../services/reducers/viewed-order";
+import { viewedOrderReducer, initialState } from "./viewed-order";
 import {
   setViewedOrder,
   removeViewedOrder,
   setViewedOrderComponent,
-} from "../../../services/actions/viewed-order";
-import { mockOrder } from "../../../utils/mock-data";
+} from "../actions/viewed-order";
+import { mockOrder } from "../../utils/mock-data";
 
 describe("viewed order reducer", () => {
   it("should return the initial state", () => {

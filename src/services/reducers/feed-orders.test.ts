@@ -1,15 +1,15 @@
 import {
   feedOrdersReducer,
   initialState,
-} from "../../../services/reducers/feed-orders";
+} from "./feed-orders";
 import {
   feedWsConnectionEnd,
   feedWsConnectionSuccess,
   feedWsConnectionClosed,
   feedWsConnectionError,
   feedWsGetMessage,
-} from "../../../services/actions/feed-orders";
-import { mockFeedWsMessage } from "../../../utils/mock-data";
+} from "../actions/feed-orders";
+import { mockFeedWsMessage } from "../../utils/mock-data";
 
 describe("feed orders reducer", () => {
   it("should return the initial state", () => {
