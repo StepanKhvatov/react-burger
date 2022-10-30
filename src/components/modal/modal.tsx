@@ -42,6 +42,7 @@ const Modal: FC<TModalProps> = ({ children, onClose, title, isOpen }) => {
           {children}
           <button
             aria-label="modal-close-button"
+            data-testid="modal-close-button"
             type="button"
             className={modalStyles["close-button"]}
             onClick={onClose}

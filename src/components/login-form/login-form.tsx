@@ -68,7 +68,9 @@ const LoginForm: FC = () => {
         error={Boolean(errors.password)}
         errorText={errors.password}
       />
-      <Button htmlType="submit">Войти</Button>
+      <Button name="login-submit-button" htmlType="submit">
+        Войти
+      </Button>
     </form>
   );
 };

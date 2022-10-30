@@ -10,7 +10,10 @@ const OrderDetails: FC = () => {
   const { number } = order || {};
 
   return (
-    <div className={`${orderDetailsStyles.container} pt-15 pb-15`}>
+    <div
+      data-testid="order-details"
+      className={`${orderDetailsStyles.container} pt-15 pb-15`}
+    >
       <span className="text text_type_digits-large mb-8">{number}</span>
       <h4 className="text text_type_main-medium">идентификатор заказа</h4>
       <img

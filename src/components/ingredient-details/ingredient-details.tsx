@@ -11,18 +11,43 @@ const IngredientDetails: FC = () => {
     ingredient || {};
 
   return (
-    <div className={ingredientDetailsStyles.container}>
+    <div
+      className={ingredientDetailsStyles.container}
+      data-testid="ingredient-details"
+    >
       <img
         src={image_large}
         alt={name}
         className={`${ingredientDetailsStyles.image} mb-4`}
+        data-testid="ingredient-details-image"
       />
-      <h4 className="text text_type_main-medium mb-8">{name}</h4>
+      <h4
+        className="text text_type_main-medium mb-8"
+        data-testid="ingredient-details-name"
+      >
+        {name}
+      </h4>
       <div className={ingredientDetailsStyles["info-container"]}>
-        <InfoColumn title="Калории,ккал" value={calories} />
-        <InfoColumn title="Белки, г" value={proteins} />
-        <InfoColumn title="Жиры, г" value={fat} />
-        <InfoColumn title="Углеводы, г" value={carbohydrates} />
+        <InfoColumn
+          title="Калории,ккал"
+          value={calories}
+          dataTestId="ingredient-details-calories"
+        />
+        <InfoColumn
+          title="Белки, г"
+          value={proteins}
+          dataTestId="ingredient-details-proteins"
+        />
+        <InfoColumn
+          title="Жиры, г"
+          value={fat}
+          dataTestId="ingredient-details-fat"
+        />
+        <InfoColumn
+          title="Углеводы, г"
+          value={carbohydrates}
+          dataTestId="ingredient-details-carbohydrates"
+        />
       </div>
     </div>
   );
