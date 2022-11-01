@@ -38,6 +38,7 @@ const BurgerConstructor: FC = () => {
 
   return (
     <div
+      data-testid="burger-constructor"
       ref={dropRef}
       style={{
         border: isHover ? "1px solid #4C4CFF" : "1px solid transparent",
@@ -54,6 +55,7 @@ const BurgerConstructor: FC = () => {
       )}
       {blockedItem && (
         <div
+          data-testid="blocked-constructor-ingredient"
           className={`${burgerConstructorStyles["constructor-element-container"]} pr-7`}
         >
           <div

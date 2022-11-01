@@ -13,7 +13,7 @@ type TIngredientsState = {
   GET_INGREDIENTS_SUCCESS: boolean;
 };
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   items: [],
   GET_INGREDIENTS_REQUEST: false,
   GET_INGREDIENTS__ERROR: false,

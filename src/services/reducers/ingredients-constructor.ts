@@ -12,7 +12,7 @@ type TIngredientsConstructorState = {
   unblockedItems: Array<TIngredientWithKey>;
 };
 
-const initialState: TIngredientsConstructorState = {
+export const initialState: TIngredientsConstructorState = {
   blockedItem: null,
   unblockedItems: [],
 };

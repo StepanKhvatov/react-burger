@@ -58,6 +58,7 @@ const BurgerConstructorFooter = () => {
         <CurrencyIcon type="primary" />
       </div>
       <Button
+        name="order-submit-button"
         disabled={!orderIngredientsIds.length || submitLoading}
         type="primary"
         size="large"

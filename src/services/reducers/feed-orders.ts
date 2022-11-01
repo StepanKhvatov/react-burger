@@ -13,7 +13,7 @@ type TFeedOrdersState = {
   messages: Array<TFeedWsMessage>;
 };
 
-const initialState: TFeedOrdersState = {
+export const initialState: TFeedOrdersState = {
   wsConnected: false,
   messages: [],
 };

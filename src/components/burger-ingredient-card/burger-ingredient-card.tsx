@@ -47,11 +47,12 @@ const BurgerIngredientCard: FC<TBurgerIngredientCardProps> = ({
   return (
     <>
       <li
+        data-testid="burger-ingredient-card"
         ref={dragRef}
         tabIndex={0}
         style={{ opacity: isDrag ? "0.6" : 1 }}
         onClick={onIngredientClick}
-        className={`${burgerIngredientCardStyles.card} m-3`}
+        className={` ${burgerIngredientCardStyles.card} m-3`}
       >
         {!!ingredientQuantity && (
           <Counter count={ingredientQuantity} size="default" />

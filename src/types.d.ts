@@ -20,8 +20,8 @@ export type TIngredient = {
   readonly __v: number;
 };
 
-export type TOrder = {
-  readonly ingredients: Array<string>;
+export type TOrder<T = string> = {
+  readonly ingredients: Array<T>;
   readonly _id: string;
   readonly status: "created" | "pending" | "done";
   readonly number: number;
@@ -39,8 +39,9 @@ export type TUser = {
   readonly name: string;
 };
 
-export type TOwnerOrder = TOrder & {
-  owner: TUser;
+export type TOwnerOrder = TOrder<TIngredient> & {
+  readonly owner: TUser;
+  readonly price: number;
 };
 
 export type TAuthSuccessResponse = {
